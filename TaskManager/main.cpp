@@ -10,5 +10,9 @@ int main()
 	// git Test
 	std::cout << "GitHub 연결 및 push Test용도\n";
 
+	// vs로 테스트
+	std::cout << "Last test";
+
+
 	return 0;
 }
