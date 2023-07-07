@@ -24,12 +24,18 @@
     <ClCompile Include="Calendar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scheduler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Calendar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

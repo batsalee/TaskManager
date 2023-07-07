@@ -13,18 +13,18 @@
 
 Scheduler::Scheduler() // 오늘 일정 관리할때
 {
-	get_todays_date();
+	getTodaysDate();
 	path = setPath();
 
-	create_taskfile();
+	createTaskfile();
 }
 
-Scheduler::Scheduler(std::string y, std::string m, std::string d) // 다른 특정 날짜 관리할때
+Scheduler::Scheduler(Date d) // 다른 특정 날짜 관리할때
 {
-	year = y; month = m; day = d;
+	year = d.year; month = d.month; day = d.day;
 	path = setPath();
 
-	create_taskfile();
+	createTaskfile();
 }
 
 Scheduler::~Scheduler() {};  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
@@ -34,20 +34,14 @@ Scheduler::~Scheduler() {};  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 
 
 // 오늘 날짜 얻기
-void Scheduler::get_todays_date()
+void Scheduler::getTodaysDate()
 {
-	using namespace std::chrono;
+	Date d;
+	d.getTodaysDate();
 
-	// 현재 local time 구하기
-	const local_time<system_clock::duration> now = 
-		zoned_time{ current_zone(), system_clock::now() }.get_local_time();
-
-	// year_month_day까지만 자르기
-	const time_point<std::chrono::local_t, std::chrono::days> tp = floor<std::chrono::days>(now);
-
-	year = std::format("{:%Y}", tp);
-	month = std::format("{:%m}", tp);
-	day = std::format("{:%d}", tp);
+	this->year = d.year;
+	this->month = d.month;
+	this->day = d.day;
 }
 
 std::string Scheduler::setPath()
@@ -56,7 +50,7 @@ std::string Scheduler::setPath()
 }
 
 // 오늘의 일정 폴더 및 파일 생성
-void Scheduler::create_taskfile()
+void Scheduler::createTaskfile()
 {
 	// 폴더 없으면 만들기
 	if (!std::filesystem::exists("./Schedule/" + year + "/" + month))
@@ -93,5 +87,5 @@ void Scheduler::create_taskfile()
 	}	
 } 
 
-void Scheduler::remove_taskfile() {} // 일정파일/폴더 제거
-void Scheduler::change_taskfile() {}	// 일정파일 내용변경
+void Scheduler::removeTaskfile() {} // 일정파일/폴더 제거
+void Scheduler::changeTaskfile() {}	// 일정파일 내용변경

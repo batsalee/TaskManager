@@ -132,11 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Calendar.cpp" />
+    <ClCompile Include="Date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Calendar.h" />
+    <ClInclude Include="Date.h" />
     <ClInclude Include="Scheduler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

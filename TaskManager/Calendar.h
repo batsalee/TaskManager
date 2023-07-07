@@ -1,10 +1,4 @@
-#pragma once
-
 /* Calendar
-
-구성
-1) 싱글턴
-2) 클래스 틀만 짜고 자세한 구성내용은 cpp파일로
 
 역할
 1) 날짜/요일 계산
@@ -13,8 +7,21 @@
 
 */
 
+#pragma once
+#include "Date.h"
+
 class Calendar
 {
+private:
+	// 관리중인 날짜
+	std::string year, month, day;
 
+	void getTodaysDate();
+	void setDate(Date);
 
+public:
+	Calendar();
+	Calendar(Date);
+
+	void makeCalendar(Date);
 };
