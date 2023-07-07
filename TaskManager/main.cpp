@@ -5,13 +5,7 @@
 int main()
 {
 	// Debug
-	std::cout << "프로젝트 생성 및 프레임만 짜두기\n";
-
-	// vs push test
-	std::cout << "vs push test\n";
-
-	// last push test
-	std::cout << "last push test\n";
+	std::cout << "Scheduler 작성중...\n";
 
 	return 0;
 }
