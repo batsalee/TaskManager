@@ -1,2 +1,3 @@
 ﻿  Scheduler.cpp
+C:\workspace\TaskManager\TaskManager\Scheduler.cpp(78,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   TaskManager.vcxproj -> C:\workspace\TaskManager\x64\Debug\TaskManager.exe
