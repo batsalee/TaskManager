@@ -1,5 +1,3 @@
-#include "Scheduler.h"
-
 /* Task Schduler 자세한 구현
 * 
 역할
@@ -11,23 +9,32 @@
 1) C++ 17이상 사용, 20이상 권장
 
 */
+#include "Scheduler.h"
 
 Scheduler::Scheduler() // 오늘 일정 관리할때
 {
-	date = get_todays_date();
-	path = "./Schedule/" + this->date;
+	get_todays_date();
+	path = setPath();
+
+	create_taskfile();
 }
 
-Scheduler::Scheduler(std::string s) // 다른 특정 날짜 관리할때
+Scheduler::Scheduler(std::string y, std::string m, std::string d) // 다른 특정 날짜 관리할때
 {
-	date = get_todays_date();
-	path = "./Schedule/" + s;
+	year = y; month = m; day = d;
+	path = setPath();
+
+	create_taskfile();
 }
 
 Scheduler::~Scheduler() {};  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 
+
+/////////////////////////////////////////////////////////////////////////
+
+
 // 오늘 날짜 얻기
-std::string Scheduler::get_todays_date()
+void Scheduler::get_todays_date()
 {
 	using namespace std::chrono;
 
@@ -38,16 +45,29 @@ std::string Scheduler::get_todays_date()
 	// year_month_day까지만 자르기
 	const time_point<std::chrono::local_t, std::chrono::days> tp = floor<std::chrono::days>(now);
 
-	std::string todays_date = std::format("{:%Y-%m-%d}", tp);;
-	// ex) 2023-07-07
+	year = std::format("{:%Y}", tp);
+	month = std::format("{:%m}", tp);
+	day = std::format("{:%d}", tp);
+}
 
-	return todays_date;
+std::string Scheduler::setPath()
+{
+	return "./Schedule/" + year + "/" + month + "/" + day + ".txt";
 }
 
 // 오늘의 일정 폴더 및 파일 생성
 void Scheduler::create_taskfile()
-{	
-	/*if (std::filesystem::exists())*/
+{
+	// 폴더 없으면 만들기
+	if (!std::filesystem::exists("./Schedule/" + year + "/" + month))
+		std::filesystem::create_directories("./Schedule/" + year + "/" + month);
+
+	if (!std::filesystem::exists(path)) {	
+		std::filesystem::path from("./Schedule/const_data/everyday.txt");
+		std::filesystem::path to(path);
+		std::filesystem::copy(from, to);
+	}
+		
 } 
 
 void Scheduler::remove_taskfile() {} // 일정파일/폴더 제거

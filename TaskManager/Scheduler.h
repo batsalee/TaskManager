@@ -21,24 +21,25 @@
 class Scheduler
 {
 private:
+	// 할일들 목록
 	std::vector<std::list<std::string>> tasks;
 	std::stack<std::tuple<std::string, int, int>> completed;
-	std::string todays_date;
 	
-	// test
-public:
-	std::filesystem::path p;
+	// 관리중인 날짜
+	std::string year, month, day;
+	
+	// 해당 날짜의 일정 파일 경로
+	std::string path; 
 
-public :
-	Scheduler();
-	Scheduler(std::filesystem::path p);
-	~Scheduler();  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
-
-	std::string get_todays_date(); // 오늘 날짜 얻기
+	void get_todays_date(); // 오늘 날짜 얻기
+	std::string setPath();
 
 	void create_taskfile(); // 오늘의 일정 폴더 및 파일 생성
 	void remove_taskfile(); // 일정파일/폴더 제거
 	void change_taskfile();	// 일정파일 내용변경
 
-	// 매개변수들 함수 구현하면서 구체화하기
+public :
+	Scheduler();
+	Scheduler(std::string, std::string, std::string);
+	~Scheduler();  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 };
