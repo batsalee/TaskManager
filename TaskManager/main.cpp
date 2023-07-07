@@ -10,7 +10,6 @@ int main()
 
 	Date da;
 	Calendar c;
-	c.makeCalendar(da);
 
 	return 0;
 }

@@ -18,10 +18,10 @@ private:
 
 	void getTodaysDate();
 	void setDate(Date);
+	void makeCalendar(Date);
 
 public:
 	Calendar();
 	Calendar(Date);
 
-	void makeCalendar(Date);
 };
