@@ -1,0 +1,31 @@
+diff a/TaskManager/Scheduler.cpp b/TaskManager/Scheduler.cpp	(rejected hunks)
+@@ -62,12 +62,28 @@
+ 	if (!std::filesystem::exists("./Schedule/" + year + "/" + month))
+ 		std::filesystem::create_directories("./Schedule/" + year + "/" + month);
+ 
++	// ���� ������ �����
+ 	if (!std::filesystem::exists(path)) {	
+ 		std::filesystem::path from("./Schedule/const_data/everyday.txt");
+ 		std::filesystem::path to(path);
+ 		std::filesystem::copy(from, to);
+ 	}
+-		
++	else { // �̹� �ִٸ� �ش��� ���������� �ִٴ� ���̹Ƿ� const.txt append���ֱ�
++		std::ifstream in("./Schedule/const_data/everyday.txt");
++		std::string s;
++
++		// �� �ش�κ� is_open() �翬�� �����ϴϱ� �ȴٰ� �����Ѱǵ�
++		// ���߿� ����ó�� ������ �� ���� ������ �����صα�
++		in.seekg(0, std::ios::end);
++		int size = in.tellg();
++		s.resize(size);  
++		in.seekg(0, std::ios::beg);
++		in.read(&s[0], size);
++
++		// �� ���� ���������� ����ó�� ������ �� ���� ����
++		std::ofstream out(path, std::ios::app);
++		out << '\n' << s;
++	}
+ } 
+ 
+ void Scheduler::remove_taskfile() {} // ��������/���� ����

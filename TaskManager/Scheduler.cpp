@@ -68,22 +68,20 @@ void Scheduler::create_taskfile()
 		std::filesystem::path to(path);
 		std::filesystem::copy(from, to);
 	}
-	else { // 이미 있다면 해당일 개별일정이 있다는 뜻이므로 const.txt append해주기
+	else {
 		std::ifstream in("./Schedule/const_data/everyday.txt");
 		std::string s;
 
-		// ★ 해당부분 is_open() 당연히 존재하니까 된다고 가정한건데
-		// 나중에 예외처리 잡아줘야 할 수도 있으니 염두해두기
+		// 개별일정이 있다는 뜻이므로 const.txt append해주기
 		in.seekg(0, std::ios::end);
 		int size = in.tellg();
-		s.resize(size);  
+		s.resize(size);
 		in.seekg(0, std::ios::beg);
 		in.read(&s[0], size);
-
-		// ★ 위와 마찬가지로 예외처리 잡아줘야 할 수도 있음
+		
 		std::ofstream out(path, std::ios::app);
 		out << '\n' << s;
-	}
+	}	
 } 
 
 void Scheduler::remove_taskfile() {} // 일정파일/폴더 제거
