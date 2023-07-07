@@ -68,19 +68,28 @@ void Scheduler::create_taskfile()
 		std::filesystem::path to(path);
 		std::filesystem::copy(from, to);
 	}
-	else {
-		std::ifstream in("./Schedule/const_data/everyday.txt");
-		std::string s;
+	else { // 파일이 이미 있다면
+		std::ifstream p(path);
+		char c;
+		p.seekg(-1, std::ios::end);
+		p.read(&c, 1);
+		p.close();
 
-		// 개별일정이 있다는 뜻이므로 const.txt append해주기
-		in.seekg(0, std::ios::end);
-		int size = in.tellg();
-		s.resize(size);
-		in.seekg(0, std::ios::beg);
-		in.read(&s[0], size);
-		
-		std::ofstream out(path, std::ios::app);
-		out << '\n' << s;
+		if (c != '#') { // 개별일정이 있고 && 오늘 처음 연 파일이라면
+			std::ifstream in("./Schedule/const_data/everyday.txt");
+			std::string s;
+
+			// 개별일정이 있다는 뜻이므로 const.txt append해주기
+			in.seekg(0, std::ios::end);
+			int size = in.tellg();
+			s.resize(size);
+			in.seekg(0, std::ios::beg);
+			in.read(&s[0], size);
+
+			std::ofstream out(path, std::ios::app);			
+			out << '\n' << s << "\n#";
+			// 이미 everday.txt를 붙여왓으니 또 붙일 필요 없으므로
+		}		
 	}	
 } 
 
