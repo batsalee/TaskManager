@@ -9,27 +9,29 @@ Window {
     color: "#333333"
     title: qsTr("TaskManager")
 
-    Column {
-        id: column
-        x: 0
-        y: 0
-        width: parent.width / 100 * 85
+    ScrollView {
+        id: scrollView
+        width: parent.width * 0.85
         height: parent.height
+        clip: true
 
-        Repeater {
-            model: 50 // 나중에 vector 갯수 파악해서 여기로 가져와서 써주면 될듯? 아니면 디자인을 위해 걍 놔두거나
-            Rectangle {
-                id: rectangle
-                x: 0
-                y: 0
+        ListView {
+            width: parent.width
+            height: parent.height
+            model: 20 // c++에서 vector 갯수 몇개인지 받아와서 여기 써주면 됨. 너무 많으면 스크롤도 저절로 생김
+            delegate: Item {
                 width: parent.width
                 height: 30
-                color: Positioner.index % 2 ? "#555555" : "#444444"
-
+                Rectangle {
+                    x: 0
+                    y: 0
+                    width: parent.width
+                    height: parent.height
+                    color: index % 2 ? "#555555" : "#444444"
+                }
             }
         }
     }
-
 
     Column {
         id: right_column
