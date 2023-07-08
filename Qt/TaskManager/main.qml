@@ -9,43 +9,27 @@ Window {
     color: "#333333"
     title: qsTr("TaskManager")
 
-    Rectangle {
-        id: rectangle
+    Column {
+        id: column
         x: 0
         y: 0
         width: parent.width / 100 * 85
         height: parent.height
-        color: "#1e1e1e"
 
-        Column {
-            id: left_column
-            width: parent.width
-            height: parent.height
-
-            Row {
-                id: row1
+        Repeater {
+            model: 50 // 나중에 vector 갯수 파악해서 여기로 가져와서 써주면 될듯? 아니면 디자인을 위해 걍 놔두거나
+            Rectangle {
+                id: rectangle
+                x: 0
+                y: 0
                 width: parent.width
                 height: 30
-
-                Rectangle {
-                    id: rectangle1
-                    width: parent.width
-                    height: 30
-                    color: "#333333"
-
-                    Text {
-                        id: text1
-                        color: "#FFFFFF"
-                        text: qsTr("글씨 써지는거 확인")
-                        font.pixelSize: 18
-                    }
-                }
+                color: Positioner.index % 2 ? "#555555" : "#444444"
 
             }
         }
-
-
     }
+
 
     Column {
         id: right_column
@@ -55,7 +39,7 @@ Window {
         height: parent.height
 
         Button {
-            id: button1
+            id: refresh
             x: 0
             y: 0
             width: parent.width
@@ -64,12 +48,21 @@ Window {
         }
 
         Button {
-            id: button2
+            id: task_manage
             x: 0
             y: 0
             width:  parent.width
             height: parent.height / 10
             text: qsTr("일정 관리")
+        }
+
+        Button {
+            id: long_term_goal
+            x: 0
+            y: 0
+            width:  parent.width
+            height: parent.height / 10
+            text: qsTr("장기 계획")
         }
     }
 }
