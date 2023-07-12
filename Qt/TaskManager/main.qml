@@ -20,6 +20,7 @@ Window {
             height: parent.height
             model: 20 // c++에서 vector 갯수 몇개인지 받아와서 여기 써주면 됨. 너무 많으면 스크롤도 저절로 생김
             delegate: Rectangle {
+                id: frame
                 x: 0
                 y: 0
                 width: parent.width
@@ -30,13 +31,23 @@ Window {
                     spacing: 10
                     anchors.fill: parent
                     Repeater {
+                        id: repeater
                         model: 5 // vector size로 변경
                         Rectangle {
-                            width: scheduleText.width
-                            height: 20
+                            id: rectangle
+                            width: scheduleText.width + 10
+                            height: scheduleText.height
+                            color: "#33AABB"
+                            radius: 10
+                            anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 id: scheduleText
-                                text: "Hello"  // 여기를 vector 내의 내용으로 변경
+                                x: parent + 5
+                                anchors.centerIn: parent
+                                color: "#FFFFFF"
+                                font.pointSize: 12 // 여기를 vector 내의 내용으로 변경
+                                text: "1일 1커밋"
+                                font.bold: true
                             }
                         }
                     }
