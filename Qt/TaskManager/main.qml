@@ -12,9 +12,8 @@ Window {
     ListView {
         width: parent.width * 0.85
         height: parent.height
-        model: 5 // c++에서 vector 갯수 몇개인지 받아와서 여기 써주면 됨. 너무 많으면 스크롤도 저절로 생김
+        model: 30 // c++에서 vector 갯수 몇개인지 받아와서 여기 써주면 됨
         delegate: Rectangle {
-            id: frame
             x: 0
             y: 0
             width: parent.width
@@ -25,7 +24,6 @@ Window {
                 spacing: 10
                 anchors.fill: parent
                 Repeater {
-                    id: repeater
                     model: 5 // vector size로 변경
                     Rectangle {
                         id: rectangle
@@ -42,6 +40,13 @@ Window {
                             font.pointSize: 12 // 여기를 vector 내의 내용으로 변경
                             text: "1일 1커밋"
                             font.bold: true
+                        }
+                        MouseArea {
+                            width: parent.width
+                            height: parent.height
+                            onClicked: {
+                                scheduleText.text = "clicked"
+                            }
                         }
                     }
                 }
