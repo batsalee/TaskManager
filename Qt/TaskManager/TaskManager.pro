@@ -1,6 +1,7 @@
 QT += quick
 
 SOURCES += \
+        Date.cpp \
         main.cpp
 
 resources.files = main.qml 
@@ -18,6 +19,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    images/종료.png \
-    images/종료.png
+HEADERS += \
+    Date.h

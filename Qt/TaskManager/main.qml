@@ -45,7 +45,8 @@ Window {
                             width: parent.width
                             height: parent.height
                             onClicked: {
-                                scheduleText.text = "clicked"
+                                rectangle.visible = false
+                                // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                             }
                         }
                     }
