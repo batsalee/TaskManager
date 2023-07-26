@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     Scheduler s;
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("lineCount", s.tasks.size());
+    engine.rootContext()->setContextProperty("lineCount", s.tasks.size() - 1);
     engine.rootContext()->setContextProperty("taskList", QVariant::fromValue(s.tasks));
 
     const QUrl url(u"qrc:/TaskManager/main.qml"_qs);

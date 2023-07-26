@@ -12,19 +12,24 @@ Window {
     ListView {
         width: parent.width * 0.85
         height: parent.height
-        model: lineCount - 1
+        model: lineCount
         delegate: Rectangle {
+            id: backgroundRect
             x: 0
             y: 0
             width: parent.width
             height: 30
             color: index % 2 ? "#555555" : "#444444"
 
+            property int yIndex;
+            property int xIndex;
+            function getxIndex() { yIndex = index; }
+
             Row {
                 spacing: 10
                 anchors.fill: parent
                 Repeater {
-                    model: taskList[index] // vector size로 변경
+                    model: taskList[index]
                     Rectangle {
                         id: rectangle
                         width: scheduleText.width + 10
@@ -34,7 +39,7 @@ Window {
                         anchors.verticalCenter: parent.verticalCenter
                         Text {
                             id: scheduleText
-                            x: parent + 5
+                            x: 5
                             anchors.centerIn: parent
                             color: "#FFFFFF"
                             font.pointSize: 12
@@ -47,8 +52,9 @@ Window {
                             onDoubleClicked: {
                                 rectangle.visible = false
                                 // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
-                                //console.log(index);
-
+                                backgroundRect.getxIndex();
+                                xIndex = index;
+                                console.log("yIndex : " + yIndex + ", xIndex : " + xIndex);
                             }
                         }
                     }
