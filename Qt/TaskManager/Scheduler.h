@@ -41,9 +41,10 @@ private:
 
 public:
     QList<QList<QString>> tasks; // 할일들 목록
-    Q_INVOKABLE void removeTask(qint32, qint32);
 
     Scheduler();
     Scheduler(QString, QString, QString);
     ~Scheduler();  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
+
+    Q_INVOKABLE void removeTask(qint32, qint32);
 };

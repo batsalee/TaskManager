@@ -2,6 +2,7 @@ QT += quick
 
 SOURCES += \
         Date.cpp \
+        FolderOpener.cpp \
         Scheduler.cpp \
         main.cpp
 
@@ -22,4 +23,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     Date.h \
+    FolderOpener.h \
     Scheduler.h

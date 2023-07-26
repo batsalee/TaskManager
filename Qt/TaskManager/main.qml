@@ -52,12 +52,13 @@ Window {
                             width: parent.width
                             height: parent.height
                             onDoubleClicked: {
-                                repeater.model = taskList[yIndex];
-
                                 // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                                 backgroundRect.getxIndex();
                                 xIndex = index;
                                 scheduler.removeTask(yIndex, xIndex);
+
+                                //listView.model = scheduler.getTasks();
+                                rectangle.visible = false;
                             }
                         }
                     }
@@ -80,6 +81,8 @@ Window {
             width: parent.width
             height: parent.height / 10
             text: qsTr("새로 고침")
+
+            // 현재 수정중인 인덱스 문제와 같이 해결될듯함
         }
 
         Button {
@@ -89,6 +92,11 @@ Window {
             width:  parent.width
             height: parent.height / 10
             text: qsTr("일정 관리")
+
+            onClicked: {
+                var path = "file:///C:/workspace/Qt/build-TaskManager-Replacement_for_Desktop_x86_windows_msvc2022_pe_64bit-Debug/Schedule";
+                folder_opener.openFolder(path);
+            }
         }
 
         Button {
@@ -98,6 +106,11 @@ Window {
             width:  parent.width
             height: parent.height / 10
             text: qsTr("장기 계획")
+
+            onClicked: {
+                var path = "file:///C:/workspace/Qt/build-TaskManager-Replacement_for_Desktop_x86_windows_msvc2022_pe_64bit-Debug/Schedule/long_term_goal";
+                folder_opener.openFolder(path);
+            }
         }
     }
 }
