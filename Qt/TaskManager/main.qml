@@ -12,7 +12,7 @@ Window {
     ListView {
         width: parent.width * 0.85
         height: parent.height
-        model: 7
+        model: taskList
         delegate: Rectangle {
             x: 0
             y: 0
@@ -24,7 +24,7 @@ Window {
                 spacing: 10
                 anchors.fill: parent
                 Repeater {
-                    model: 5 // vector size로 변경
+                    model: modelData.length // vector size로 변경
                     Rectangle {
                         id: rectangle
                         width: scheduleText.width + 10
@@ -38,7 +38,7 @@ Window {
                             anchors.centerIn: parent
                             color: "#FFFFFF"
                             font.pointSize: 12 // 여기를 vector 내의 내용으로 변경
-                            text: "test"
+                            text: modelData.get(index)
                             font.bold: true
                         }
                         MouseArea {

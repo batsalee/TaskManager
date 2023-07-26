@@ -60,10 +60,12 @@ void Scheduler::createTaskfile()
         std::filesystem::create_directories("./Schedule/" + year.toStdString() + "/" + month.toStdString());
 
     // 파일 없으면 만들기
+    std::ofstream out(path.toStdString(), std::ios::app);
     if (!std::filesystem::exists(path.toStdString())) {
         std::filesystem::path from("./Schedule/const_data/everyday.txt");
         std::filesystem::path to(path.toStdString());
         std::filesystem::copy(from, to);
+        out << "\n#";
     }
     else { // 파일이 이미 있다면
         std::ifstream p(path.toStdString());
@@ -83,7 +85,6 @@ void Scheduler::createTaskfile()
             in.seekg(0, std::ios::beg);
             in.read(&s[0], size);
 
-            std::ofstream out(path.toStdString(), std::ios::app);
             out << '\n' << s << "\n#";
             // 이미 everday.txt를 붙여왓으니 또 붙일 필요 없으므로
         }
@@ -105,6 +106,7 @@ void Scheduler::readTaskfile()
 
             temp.push_back(QString::fromStdString(task));
         }
+        temp.pop_front();
         tasks.push_back(temp);
     }
 }
