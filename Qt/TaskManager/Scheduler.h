@@ -17,21 +17,31 @@
 #include <sstream>
 #include <QList>
 #include <QString>
+#include <QObject>
 
-class Scheduler
+//
+#include <QDebug>
+
+class Scheduler : public QObject
 {
+    Q_OBJECT
+
 private:
     QString year, month, day; // 관리중인 날짜
     QString path; // 해당 날짜의 일정 파일 경로
 
     void getTodaysDate(); // 오늘 날짜 얻기
-    void setPath();
+    void setPath(); // 파일 경로 설정
+
+    // 파일 관리 함수들
     void createTaskfile(); // 오늘의 일정 폴더 및 파일 생성
     void readTaskfile();
+    void updateTaskfile();
     //void removeTaskfile(); // 일정파일/폴더 제거
 
-public :
+public:
     QList<QList<QString>> tasks; // 할일들 목록
+    Q_INVOKABLE void removeTask(qint32, qint32);
 
     Scheduler();
     Scheduler(QString, QString, QString);

@@ -10,6 +10,7 @@ Window {
     title: qsTr("TaskManager")
 
     ListView {
+        id: listView
         width: parent.width * 0.85
         height: parent.height
         model: lineCount
@@ -29,6 +30,7 @@ Window {
                 spacing: 10
                 anchors.fill: parent
                 Repeater {
+                    id: repeater
                     model: taskList[index]
                     Rectangle {
                         id: rectangle
@@ -50,11 +52,12 @@ Window {
                             width: parent.width
                             height: parent.height
                             onDoubleClicked: {
-                                rectangle.visible = false
+                                repeater.model = taskList[yIndex];
+
                                 // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                                 backgroundRect.getxIndex();
                                 xIndex = index;
-                                console.log("yIndex : " + yIndex + ", xIndex : " + xIndex);
+                                scheduler.removeTask(yIndex, xIndex);
                             }
                         }
                     }

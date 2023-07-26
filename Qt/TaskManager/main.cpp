@@ -7,11 +7,12 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    Scheduler s;
+    Scheduler scheduler;
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("lineCount", s.tasks.size() - 1);
-    engine.rootContext()->setContextProperty("taskList", QVariant::fromValue(s.tasks));
+    engine.rootContext()->setContextProperty("scheduler", &scheduler);
+    engine.rootContext()->setContextProperty("lineCount", scheduler.tasks.size() - 1);
+    engine.rootContext()->setContextProperty("taskList", QVariant::fromValue(scheduler.tasks));
 
     const QUrl url(u"qrc:/TaskManager/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

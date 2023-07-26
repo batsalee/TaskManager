@@ -29,7 +29,10 @@ Scheduler::Scheduler(QString y, QString m, QString d) // 다른 특정 날짜 �
     readTaskfile();
 }
 
-Scheduler::~Scheduler() {};  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
+Scheduler::~Scheduler() // 현재 상태 파일에 새로 쓰는 내용 갱신하기
+{
+    updateTaskfile();
+}
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -52,6 +55,17 @@ void Scheduler::setPath()
     path = "./Schedule/" + year + "/" + month + "/" + day + ".txt";
 }
 
+void Scheduler::removeTask(qint32 y, qint32 x)
+{
+    //
+    qDebug() << y << ' ' << x;
+
+    tasks[y].removeAt(x);
+    if(tasks[y].empty()) tasks.removeAt(y);
+}
+
+/////////////////////////////////////////////////////////////////////////
+
 // 오늘의 일정 폴더 및 파일 생성
 void Scheduler::createTaskfile()
 {
@@ -60,11 +74,12 @@ void Scheduler::createTaskfile()
         std::filesystem::create_directories("./Schedule/" + year.toStdString() + "/" + month.toStdString());
 
     // 파일 없으면 만들기
-    std::ofstream out(path.toStdString(), std::ios::app);
     if (!std::filesystem::exists(path.toStdString())) {
         std::filesystem::path from("./Schedule/const_data/everyday.txt");
         std::filesystem::path to(path.toStdString());
         std::filesystem::copy(from, to);
+
+        std::ofstream out(path.toStdString(), std::ios::app);
         out << "\n#";
     }
     else { // 파일이 이미 있다면
@@ -85,6 +100,7 @@ void Scheduler::createTaskfile()
             in.seekg(0, std::ios::beg);
             in.read(&s[0], size);
 
+            std::ofstream out(path.toStdString(), std::ios::app);
             out << '\n' << s << "\n#";
             // 이미 everday.txt를 붙여왓으니 또 붙일 필요 없으므로
         }
@@ -111,7 +127,17 @@ void Scheduler::readTaskfile()
     }
 }
 
-
+void Scheduler::updateTaskfile()
+{
+    std::ofstream out(path.toStdString(), std::ios::trunc);
+    for(int i = 0; i < tasks.size() - 1; i++) {
+        for(int j = 0; j < tasks[i].size(); j++) {
+            out << '#' << tasks[i][j].toStdString() << ' ';
+        }
+        out << '\n';
+    }
+    out << '#';
+}
 
 //void Scheduler::removeTaskfile() {} // 일정파일/폴더 제거
 
