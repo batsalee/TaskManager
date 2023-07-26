@@ -12,7 +12,7 @@ Window {
     ListView {
         width: parent.width * 0.85
         height: parent.height
-        model: 30 // c++에서 vector 갯수 몇개인지 받아와서 여기 써주면 됨
+        model: 7
         delegate: Rectangle {
             x: 0
             y: 0
@@ -31,14 +31,14 @@ Window {
                         height: scheduleText.height
                         color: "#33AABB"
                         radius: 10
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenter: parent.verticalCenter                        
                         Text {
                             id: scheduleText
                             x: parent + 5
                             anchors.centerIn: parent
                             color: "#FFFFFF"
                             font.pointSize: 12 // 여기를 vector 내의 내용으로 변경
-                            text: "1일 1커밋"
+                            text: "test"
                             font.bold: true
                         }
                         MouseArea {

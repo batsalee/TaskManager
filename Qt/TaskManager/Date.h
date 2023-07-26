@@ -11,13 +11,13 @@
 class Date {
 private:
     friend class Scheduler;
-    friend class Calendar;
-    std::string year, month, day;
+    //friend class Calendar;
+    QString year, month, day;
 
     void getTodaysDate();
-    void setDate(std::string, std::string, std::string);
+    void setDate(QString, QString, QString);
 
 public:
     Date();
-    Date(std::string, std::string, std::string);
+    Date(QString, QString, QString);
 };

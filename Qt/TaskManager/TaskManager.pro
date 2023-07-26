@@ -2,6 +2,7 @@ QT += quick
 
 SOURCES += \
         Date.cpp \
+        Scheduler.cpp \
         main.cpp
 
 resources.files = main.qml 
@@ -20,4 +21,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Date.h
+    Date.h \
+    Scheduler.h
