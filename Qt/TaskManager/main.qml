@@ -44,9 +44,11 @@ Window {
                         MouseArea {
                             width: parent.width
                             height: parent.height
-                            onClicked: {
+                            onDoubleClicked: {
                                 rectangle.visible = false
                                 // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
+                                //console.log(index);
+
                             }
                         }
                     }
