@@ -61,9 +61,6 @@ void Scheduler::setPath()
 
 void Scheduler::removeTask(qint32 y, qint32 x)
 {
-    //
-    qDebug() << y << ' ' << x;
-
     tasks[y].removeAt(x);
     if(tasks[y].empty()) tasks.removeAt(y);
 }
@@ -135,6 +132,7 @@ void Scheduler::readTaskfile()
         temp.pop_front();
         tasks.push_back(temp);
     }
+    tasks.pop_back(); // 체크용 문자인 # 하나 있는것때문에 공백이 하나 들어가므로
 }
 
 void Scheduler::updateTaskfile()
