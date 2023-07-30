@@ -3,6 +3,7 @@ import QtQuick.Layouts 6.3
 
 ListView {
     id: listView
+    clip: true
     model: scheduler.getTaskList()
     delegate: Rectangle {
         id: backgroundRect
