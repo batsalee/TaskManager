@@ -9,9 +9,16 @@ Window {
     color: "#333333"
     title: qsTr("TaskManager")
 
-    TaskList {
+    Clock {
         x: 0
         y: 0
+        width: parent.width * 0.85
+        height: 30
+    }
+
+    TaskList {
+        x: 0
+        y: 30
         width: parent.width * 0.85
         height: parent.height
     }
