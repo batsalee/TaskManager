@@ -2,5 +2,5 @@
 
 void FolderOpener::openFolder(const QString& path)
 {
-    QDesktopServices::openUrl(QUrl(path));
+    QDesktopServices::openUrl(QUrl(QCoreApplication::applicationDirPath() + path));
 }

@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QCoreApplication>
+#include <QFile>
 
 class FolderOpener : public QObject
 {

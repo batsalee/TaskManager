@@ -14,7 +14,7 @@ Column {
         text: qsTr("일정 관리")
 
         onClicked: {
-            var path = "file:///C:/workspace/Qt/build-TaskManager-Replacement_for_Desktop_x86_windows_msvc2022_pe_64bit-Debug/Schedule";
+            var path = "/Schedule";
             folder_opener.openFolder(path);
         }
     }
@@ -28,7 +28,7 @@ Column {
         text: qsTr("장기 계획")
 
         onClicked: {
-            var path = "file:///C:/workspace/Qt/build-TaskManager-Replacement_for_Desktop_x86_windows_msvc2022_pe_64bit-Debug/Schedule/long_term_goal";
+            var path = "/Schedule/long_term_goal";
             folder_opener.openFolder(path);
         }
     }

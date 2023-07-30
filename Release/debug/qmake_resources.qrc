@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/TaskManager">
+<file alias="main.qml">C:/workspace/TaskManager/Qt/TaskManager/main.qml</file>
+<file alias="TaskList.qml">C:/workspace/TaskManager/Qt/TaskManager/TaskList.qml</file>
+<file alias="ButtonList.qml">C:/workspace/TaskManager/Qt/TaskManager/ButtonList.qml</file>
+</qresource>
+</RCC>
