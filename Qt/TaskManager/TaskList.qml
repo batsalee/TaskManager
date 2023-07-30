@@ -27,14 +27,16 @@ ListView {
                     id: rectangle
                     width: scheduleText.width + 10
                     height: scheduleText.height
-                    color: "#33AABB"
+                    color: scheduleText.text.startsWith("★") ? "#333333" : "#33AABB"
+                    border.color: scheduleText.text.startsWith("★") ? "#DDBB88" : "#33AABB"
+                    border.width: 1.5
                     radius: 10
                     anchors.verticalCenter: parent.verticalCenter
                     Text {
                         id: scheduleText
                         x: 5
                         anchors.centerIn: parent
-                        color: "#FFFFFF"
+                        color: scheduleText.text.startsWith("★") ? "#DDBB88" : "#FFFFFF"
                         font.pointSize: 12
                         text: modelData
                         font.bold: true

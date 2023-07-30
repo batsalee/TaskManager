@@ -3,8 +3,8 @@ import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 
 Window {
-    width: Screen.width / 1.5
-    height: Screen.height / 1.5
+    width: Screen.width / 2
+    height: Screen.height / 2
     visible: true
     color: "#333333"
     title: qsTr("TaskManager")
