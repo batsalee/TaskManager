@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<RCC version="1.0">
-    <qresource prefix="/TaskManager">
-        <file alias="main.qml">../Qt/TaskManager/main.qml</file>
-        <file alias="TaskList.qml">../Qt/TaskManager/TaskList.qml</file>
-        <file alias="ButtonList.qml">../Qt/TaskManager/ButtonList.qml</file>
-    </qresource>
-</RCC>

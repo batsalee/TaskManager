@@ -4,7 +4,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QCoreApplication>
-#include <QFile>
+#include <QDir>
 
 class FolderOpener : public QObject
 {
