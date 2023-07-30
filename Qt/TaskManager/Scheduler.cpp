@@ -56,6 +56,9 @@ void Scheduler::setPath()
     path = "./Schedule/" + year + "/" + month + "/" + day + ".txt";
 }
 
+/////////////////////////////////////////////////////////////////////////
+
+
 void Scheduler::removeTask(qint32 y, qint32 x)
 {
     //
@@ -63,6 +66,11 @@ void Scheduler::removeTask(qint32 y, qint32 x)
 
     tasks[y].removeAt(x);
     if(tasks[y].empty()) tasks.removeAt(y);
+}
+
+QList<QList<QString>> Scheduler::getTaskList()
+{
+    return tasks;
 }
 
 /////////////////////////////////////////////////////////////////////////

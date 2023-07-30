@@ -6,7 +6,10 @@ SOURCES += \
         Scheduler.cpp \
         main.cpp
 
-resources.files = main.qml 
+resources.files = \
+                main.qml \
+                TaskList.qml \
+                ButtonList.qml
 resources.prefix = /$${TARGET}
 RESOURCES += resources
 
@@ -25,3 +28,7 @@ HEADERS += \
     Date.h \
     FolderOpener.h \
     Scheduler.h
+
+DISTFILES += \
+    ButtonList.qml \
+    TaskList.qml

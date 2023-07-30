@@ -29,6 +29,7 @@ class Scheduler : public QObject
 private:
     QString year, month, day; // 관리중인 날짜
     QString path; // 해당 날짜의 일정 파일 경로
+    QList<QList<QString>> tasks; // 할일들 목록
 
     void getTodaysDate(); // 오늘 날짜 얻기
     void setPath(); // 파일 경로 설정
@@ -40,11 +41,10 @@ private:
     //void removeTaskfile(); // 일정파일/폴더 제거
 
 public:
-    QList<QList<QString>> tasks; // 할일들 목록
-
     Scheduler();
     Scheduler(QString, QString, QString);
     ~Scheduler();  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 
     Q_INVOKABLE void removeTask(qint32, qint32);
+    Q_INVOKABLE QList<QList<QString>> getTaskList();
 };
