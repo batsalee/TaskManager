@@ -12,7 +12,7 @@ class Date {
 private:
     friend class Scheduler;
     //friend class Calendar;
-    QString year, month, day;
+    QString year, month, day, dayOfWeek;
 
     void getTodaysDate();
     void setDate(QString, QString, QString);
