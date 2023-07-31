@@ -133,7 +133,7 @@ void Scheduler::appendDayOfWeekTaskfile()
     in.seekg(0, std::ios::beg);
     in.read(&s[0], size);
 
-    out << s << "\n#";
+    out << '\n' << s << "\n#";
     // 이미 everday.txt를 붙여왓으니 또 붙일 필요 없으므로
 }
 
