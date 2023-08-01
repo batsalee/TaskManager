@@ -17,6 +17,9 @@ ListView {
         property int xIndex;
         function getxIndex() { yIndex = index; }
 
+        //
+        property string priority;
+
         Row {
             leftPadding: 5
             spacing: 10
@@ -30,14 +33,14 @@ ListView {
                     width: scheduleText.width + 10
                     height: scheduleText.height
                     color: {
-                        if(scheduleText.text.startsWith("★")) "#333333"
-                        else if(scheduleText.text.startsWith("@")) "#BB3377"
-                        else "#33AABB"
+                        if(priority === "IMPORTANT") "#333333"
+                        else if(priority === "PAST") "#BB3377"
+                        else if(priority === "NORMAL") "#33AABB"
                     }
                     border.color: {
-                        if(scheduleText.text.startsWith("★")) "#DDBB88"
-                        else if(scheduleText.text.startsWith("@")) "#BB3377"
-                        else "#33AABB"
+                        if(priority === "IMPORTANT") "#DDBB88"
+                        else if(priority === "PAST") "#BB3377"
+                        else if(priority === "NORMAL") "#33AABB"
                     }
                     border.width: 1.5
                     radius: 10
@@ -47,19 +50,19 @@ ListView {
                         id: scheduleText
                         x: 5
                         anchors.centerIn: parent
-                        color: {
-                            if(scheduleText.text.startsWith("★")) "#DDBB88"
-                            else if(scheduleText.text.startsWith("@")) "#BBBBBB"
-                            else "#FFFFFF"
-                        }
                         font.pointSize: 12
-
-                        rectangle.getModelData()
-
-
-
+                        color: {
+                            if(priority === "IMPORTANT") "#DDBB88"
+                            else if(priority === "PAST") "#BBBBBB"
+                            else if(priority === "NORMAL") "#FFFFFF"
+                        }
                         text: {
-                            modelData
+                            if(modelData.startsWith("★")) priority = "IMPORTANT"
+                            else if(modelData.startsWith("@")) priority = "PAST"
+                            else priority = "NORMAL"
+
+                            if(priority === "NORMAL") modelData
+                            else modelData.substr(1);
                         }
                         font.bold: true
                     }
@@ -80,7 +83,7 @@ ListView {
 
     Connections {
         target: scheduler
-        onTasksChanged: {
+        function onTasksChanged() {
             listView.model = scheduler.getTaskList(); // 화면에 보이는 리스트 갱신
         }
     }

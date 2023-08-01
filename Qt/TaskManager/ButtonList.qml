@@ -17,8 +17,8 @@ Column {
             // textinput 불러와서 작성한 내용 파일에 추가되게
             var component = Qt.createComponent("TextInputWindow.qml");
             if(component.status === Component.Ready) {
-                var textinputwindow = component.createObject();
-                textinputwindow.show();
+                var textInputWindow = component.createObject();
+                textInputWindow.show();
             }
         }
     }
