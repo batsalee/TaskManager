@@ -18,6 +18,7 @@ ListView {
         function getxIndex() { yIndex = index; }
 
         Row {
+            leftPadding: 5
             spacing: 10
             anchors.fill: parent
             Repeater {
