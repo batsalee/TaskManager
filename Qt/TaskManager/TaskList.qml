@@ -37,22 +37,24 @@ ListView {
                         anchors.centerIn: parent
                         font.pointSize: 12
                         font.bold: true
-                        color:"#FFFFFF"
                         text: {
                             if(modelData.startsWith("★")) {
                                 rectangle.color = "#333333"
                                 rectangle.border.color = "#DDBB88"
-                                scheduleText.text = modelData.substr(1);
+                                scheduleText.text = modelData
+                                scheduleText.color = "#DDBB88"
                             }
                             else if(modelData.startsWith("@")) {
                                 rectangle.color = "#BB3377"
                                 rectangle.border.color = "#BB3377"
                                 scheduleText.text = modelData.substr(1);
+                                scheduleText.color = "#AAAAAA"
                             }
                             else {
                                 rectangle.color = "#33AABB"
                                 rectangle.border.color = "#33AABB"
                                 scheduleText.text = modelData;
+                                scheduleText.color = "#FFFFFF"
                             }
                         }
                     }
