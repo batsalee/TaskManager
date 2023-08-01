@@ -37,6 +37,7 @@ private:
     // 파일 관리 함수들
     void createTaskfile(); // 오늘의 일정 폴더 및 파일 생성
     void appendDayOfWeekTaskfile();
+    void appendYesterDayTaskfile();
     void readTaskfile();
     void updateTaskfile();
     //void removeTaskfile(); // 일정파일/폴더 제거

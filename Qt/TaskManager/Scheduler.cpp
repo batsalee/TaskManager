@@ -86,9 +86,10 @@ void Scheduler::createTaskfile()
     if (!std::filesystem::exists(path.toStdString())) {
         std::filesystem::path from("./Schedule/const_data/everyday.txt");
         std::filesystem::path to(path.toStdString());
-        std::filesystem::copy(from, to);
+        std::filesystem::copy(from, to); // 이 3줄은 매일 할일 작성해주는 곳
 
-        appendDayOfWeekTaskfile();
+        appendDayOfWeekTaskfile(); // 요일별 할일 오늘날짜것 작성해주는 곳
+        appendYesterDayTaskfile(); // 어제 안하고 남긴 일 추가해주는 곳
     }
     else { // 파일이 이미 있다면
         std::ifstream p(path.toStdString());
@@ -112,6 +113,7 @@ void Scheduler::createTaskfile()
             out << '\n' << s << std::flush;
 
             appendDayOfWeekTaskfile();
+            appendYesterDayTaskfile();
         }
     }
 }
@@ -122,6 +124,24 @@ void Scheduler::appendDayOfWeekTaskfile()
 
     std::string days_path = "./Schedule/const_data/" + days[this->dayOfWeek.toInt()] + ".txt";
     std::ifstream in(days_path, std::ios::binary);
+
+    std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
+    std::string s;
+
+    // 해당 요일의 일정을 오늘의 일정 뒤에 이어붙여줌
+    in.seekg(0, std::ios::end);
+    int size = in.tellg();
+    s.resize(size);
+    in.seekg(0, std::ios::beg);
+    in.read(&s[0], size);
+
+    out << '\n' << s;
+}
+
+void Scheduler::appendYesterDayTaskfile()
+{
+    std::string yesterday_path = "./Schedule/const_data/yesterday.txt";
+    std::ifstream in(yesterday_path, std::ios::binary);
 
     std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
     std::string s;
@@ -160,14 +180,17 @@ void Scheduler::readTaskfile()
 
 void Scheduler::updateTaskfile()
 {
-    std::ofstream out(path.toStdString(), std::ios::trunc);
+    std::ofstream out(path.toStdString(), std::ios::trunc), out2("./Schedule/const_data/yesterday.txt", std::ios::trunc);
     for(int i = 0; i < tasks.size(); i++) {
         for(int j = 0; j < tasks[i].size(); j++) {
             out << '#' << tasks[i][j].toStdString() << ' ';
+            out2 << '#' << tasks[i][j].toStdString() << ' ';
         }
         out << '\n';
+        out2 << '\n';
     }
     out << '#';
+    out2 << '#';
 }
 
 //void Scheduler::removeTaskfile() {} // 일정파일/폴더 제거
