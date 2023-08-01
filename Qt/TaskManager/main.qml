@@ -29,5 +29,5 @@ Window {
         y: 0
         width: parent.width * 0.15
         height: parent.height
-    }        
+    }
 }

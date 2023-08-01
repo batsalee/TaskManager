@@ -28,8 +28,6 @@ ListView {
                     id: rectangle
                     width: scheduleText.width + 10
                     height: scheduleText.height
-                    color: "#33AABB"
-                    border.color: "#33AABB"
                     border.width: 1.5
                     radius: 10
                     anchors.verticalCenter: parent.verticalCenter
