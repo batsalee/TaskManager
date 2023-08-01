@@ -69,10 +69,21 @@ void Scheduler::setPath()
 // Q_INVOKABLE 함수들
 
 
-void Scheduler::addTask(QString task)
+void Scheduler::addTask(QString added_task)
 {
+    std::string at = added_task.toStdString();
     QList<QString> temp;
-    temp.push_back(task);
+    std::stringstream ss(at);// #단위로 분리
+
+    while(std::getline(ss, at, '#')) {
+        at.erase(0, at.find_first_not_of(" "));
+        at.erase(at.find_last_not_of(" ") + 1); // 제일 뒤나 앞에 공백 제거용
+        at.erase(0, at.find_first_not_of("@")); // 우선순위를 위해 #과 @를 사용했는데 이걸 추가하면 파싱이 꼬이므로 막아줌
+
+        // 제일 앞이 #으로 시작하면 null이 하나 들어가니까
+        if(at != "") temp.push_back(QString::fromStdString(at));
+    }
+
     tasks.push_back(temp);
 
     emit tasksChanged();
@@ -180,9 +191,9 @@ void Scheduler::readTaskfile()
             // 몇일 연속으로 안한 일이면 @가 늘어남
             if(task[0] == '@' || task[1] == '@') task.erase(0, task.find_first_not_of("@") - 1);
 
-            temp.push_back(QString::fromStdString(task));
+            // 제일 앞이 #으로 시작하면 null이 하나 들어가니까
+            if(task != "") temp.push_back(QString::fromStdString(task));
         }
-        temp.pop_front(); // 첫 # 앞의 빈공간이 들어가므로
         if(temp.size()) tasks.push_back(temp); // 마지막 #만 있는 경우도 리스트 하나가 추가되는걸 방지하기 위해
     }
 }

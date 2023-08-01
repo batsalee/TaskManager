@@ -25,12 +25,13 @@ Window {
         textInput.forceActiveFocus(); // 윈도우가 생성되면서 포커스를 설정하여 보여줌
     }
 
-    function addTask() {
-        while(textInput.text[0] === '#' || textInput.text[0] === '@') {
-            textInput.text = textInput.text.substr(1);
-        } // 우선순위를 위해 #과 @를 사용했는데 이걸 추가하면 파싱이 꼬이므로 막아줌
-
+    function addTask() { 
         scheduler.addTask(textInput.text);
         textInputWindow.close();
+        /*
+            사용자입장에서의 제약
+            1) 문장의 시작이 @ 혹은 #이면 @/#이 아닌 문자가 나올때까지 다 지워짐
+            2) task중요도를 @와 #을 이용해 구현했기때문에 파싱이 꼬일것을 감안해서 제약을 둠
+        */
     }
 }
