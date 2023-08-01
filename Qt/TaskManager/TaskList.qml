@@ -23,23 +23,44 @@ ListView {
             anchors.fill: parent
             Repeater {
                 id: repeater
-                model: modelData
+                model: modelData                
+
                 Rectangle {
                     id: rectangle
                     width: scheduleText.width + 10
                     height: scheduleText.height
-                    color: scheduleText.text.startsWith("★") ? "#333333" : "#33AABB"
-                    border.color: scheduleText.text.startsWith("★") ? "#DDBB88" : "#33AABB"
+                    color: {
+                        if(scheduleText.text.startsWith("★")) "#333333"
+                        else if(scheduleText.text.startsWith("@")) "#BB3377"
+                        else "#33AABB"
+                    }
+                    border.color: {
+                        if(scheduleText.text.startsWith("★")) "#DDBB88"
+                        else if(scheduleText.text.startsWith("@")) "#BB3377"
+                        else "#33AABB"
+                    }
                     border.width: 1.5
                     radius: 10
                     anchors.verticalCenter: parent.verticalCenter
+
                     Text {
                         id: scheduleText
                         x: 5
                         anchors.centerIn: parent
-                        color: scheduleText.text.startsWith("★") ? "#DDBB88" : "#FFFFFF"
+                        color: {
+                            if(scheduleText.text.startsWith("★")) "#DDBB88"
+                            else if(scheduleText.text.startsWith("@")) "#BBBBBB"
+                            else "#FFFFFF"
+                        }
                         font.pointSize: 12
-                        text: modelData
+
+                        rectangle.getModelData()
+
+
+
+                        text: {
+                            modelData
+                        }
                         font.bold: true
                     }
                     MouseArea {

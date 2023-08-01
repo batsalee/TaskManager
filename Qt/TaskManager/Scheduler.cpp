@@ -1,5 +1,5 @@
 /* Task Schduler 자세한 구현
-*
+ *
 역할
 1) 일정파일 생성 / 제거
 2) 일정파일 내용변경(ui에서는 클릭하면 줄그어지게)
@@ -7,6 +7,13 @@
 
 주의사항
 1) C++ 17이상 사용, 20이상 권장
+
+구현방식
+1) 오늘 할 일정들은 # 단위로 구성
+  ex) #오늘할일1-1 #오늘할일1-2
+      #오늘할일2-1
+2) 어제 다 마무리 못하고 남겨둔 일은 #@로 구분
+  ex) #@어제 남은일1-1
 
 */
 #include "Scheduler.h"
@@ -19,7 +26,7 @@ Scheduler::Scheduler() // 오늘 일정 관리할때
     createTaskfile();
     readTaskfile();
 }
-
+/*
 // 나중에 달력까지 만들게 된다면 확장을 위해
 Scheduler::Scheduler(QString y, QString m, QString d) // 다른 특정 날짜 관리할때
 {
@@ -29,7 +36,7 @@ Scheduler::Scheduler(QString y, QString m, QString d) // 다른 특정 날짜 �
     createTaskfile();
     readTaskfile();
 }
-
+*/
 Scheduler::~Scheduler() // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 {
     updateTaskfile();
@@ -59,6 +66,8 @@ void Scheduler::setPath()
 }
 
 /////////////////////////////////////////////////////////////////////////
+// Q_INVOKABLE 함수들
+
 
 void Scheduler::addTask(QString task)
 {
@@ -94,7 +103,7 @@ void Scheduler::createTaskfile()
 
     // 파일 없으면 만들기
     if (!std::filesystem::exists(path.toStdString())) {
-        std::filesystem::path from("./Schedule/const_data/everyday.txt");
+        std::filesystem::path from("./Schedule/fixed_schdule/everyday.txt");
         std::filesystem::path to(path.toStdString());
         std::filesystem::copy(from, to); // 이 3줄은 매일 할일 작성해주는 곳
 
@@ -109,18 +118,15 @@ void Scheduler::createTaskfile()
         p.close();
 
         if (c != '#') { // 개별일정이 있고 && 오늘 처음 연 파일이라면
-            std::ifstream in("./Schedule/const_data/everyday.txt", std::ios::binary);
-            std::string s;
-
-            // 개별일정이 있다는 뜻이므로 const.txt append해주기
-            in.seekg(0, std::ios::end);
-            int size = in.tellg();
-            s.resize(size);
-            in.seekg(0, std::ios::beg);
-            in.read(&s[0], size);
-
+            std::ifstream in("./Schedule/fixed_schdule/everyday.txt", std::ios::binary);
             std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
-            out << '\n' << s << std::flush;
+            std::string line;
+
+            // 개별일정이 있다는 뜻이므로 fixed와 const의 .txt append해주기
+            while(std::getline(in, line)) {
+                out << '\n' << line;
+            }
+            out << std::flush;
 
             appendDayOfWeekTaskfile();
             appendYesterDayTaskfile();
@@ -131,39 +137,29 @@ void Scheduler::createTaskfile()
 void Scheduler::appendDayOfWeekTaskfile()
 {
     std::string days[7] = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "Saturday"};
+    std::string days_path = "./Schedule/fixed_schdule/" + days[this->dayOfWeek.toInt()] + ".txt";
 
-    std::string days_path = "./Schedule/const_data/" + days[this->dayOfWeek.toInt()] + ".txt";
     std::ifstream in(days_path, std::ios::binary);
-
     std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
-    std::string s;
+    std::string line;
 
-    // 해당 요일의 일정을 오늘의 일정 뒤에 이어붙여줌
-    in.seekg(0, std::ios::end);
-    int size = in.tellg();
-    s.resize(size);
-    in.seekg(0, std::ios::beg);
-    in.read(&s[0], size);
-
-    out << '\n' << s;
+    while(std::getline(in, line)) {
+        out << '\n' << line;
+    }
 }
 
 void Scheduler::appendYesterDayTaskfile()
 {
     std::string yesterday_path = "./Schedule/const_data/yesterday.txt";
+
     std::ifstream in(yesterday_path, std::ios::binary);
-
     std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
-    std::string s;
+    std::string line;
 
-    // 해당 요일의 일정을 오늘의 일정 뒤에 이어붙여줌
-    in.seekg(0, std::ios::end);
-    int size = in.tellg();
-    s.resize(size); // size-2하면 일단 다 해결되던데.. 왜이럴까
-    in.seekg(0, std::ios::beg);
-    in.read(&s[0], size);
-
-    out << '\n' << s << "\n#";
+    while(std::getline(in, line)) {
+        out << '\n' << line;
+    }
+    out << "\n#";
     // 이미 everday.txt를 붙여왓으니 또 붙일 필요 없으므로
 }
 
@@ -194,13 +190,12 @@ void Scheduler::updateTaskfile()
     for(int i = 0; i < tasks.size(); i++) {
         for(int j = 0; j < tasks[i].size(); j++) {
             out << '#' << tasks[i][j].toStdString() << ' ';
-            out2 << '#' << tasks[i][j].toStdString() << ' ';
+            out2 << "#@" << tasks[i][j].toStdString() << ' ';
         }
         out << '\n';
         out2 << '\n';
     }
     out << '#';
-    out2 << '#';
 }
 
 //void Scheduler::removeTaskfile() {} // 일정파일/폴더 제거
