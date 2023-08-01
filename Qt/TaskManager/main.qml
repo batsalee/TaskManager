@@ -10,6 +10,7 @@ Window {
     title: qsTr("TaskManager")
 
     Clock {
+        id: clock
         x: 0
         y: 0
         width: parent.width * 0.85
@@ -17,10 +18,11 @@ Window {
     }
 
     TaskList {
+        id: todayTaskList
         x: 0
         y: 30
         width: parent.width * 0.85
-        height: parent.height
+        height: parent.height - clock.height
     }
 
     ButtonList {
