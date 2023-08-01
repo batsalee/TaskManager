@@ -146,21 +146,22 @@ void Scheduler::readTaskfile()
     while (std::getline(file, line)) {  // task 단위로 분리해서 QList로 넣어주기
         std::stringstream ss(line);// #단위로 분리
         QList<QString> temp;
+        temp.clear();
         while(std::getline(ss, task, '#')) {
             task.erase(0, task.find_first_not_of(" "));
             task.erase(task.find_last_not_of(" ") + 1); // 제일 뒤나 앞에 공백 제거용
 
             temp.push_back(QString::fromStdString(task));
         }
-        temp.pop_front();
-        tasks.push_back(temp);
+        temp.pop_front(); // 첫 # 앞의 빈공간이 들어가므로
+        if(temp.size()) tasks.push_back(temp); // 마지막 #만 있는 경우도 리스트 하나가 추가되는걸 방지하기 위해
     }
 }
 
 void Scheduler::updateTaskfile()
 {
     std::ofstream out(path.toStdString(), std::ios::trunc);
-    for(int i = 0; i < tasks.size() - 1; i++) {
+    for(int i = 0; i < tasks.size(); i++) {
         for(int j = 0; j < tasks[i].size(); j++) {
             out << '#' << tasks[i][j].toStdString() << ' ';
         }
