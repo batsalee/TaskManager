@@ -177,6 +177,9 @@ void Scheduler::readTaskfile()
             task.erase(0, task.find_first_not_of(" "));
             task.erase(task.find_last_not_of(" ") + 1); // 제일 뒤나 앞에 공백 제거용
 
+            // 몇일 연속으로 안한 일이면 @가 늘어남
+            if(task[0] == '@' || task[1] == '@') task.erase(0, task.find_first_not_of("@") - 1);
+
             temp.push_back(QString::fromStdString(task));
         }
         temp.pop_front(); // 첫 # 앞의 빈공간이 들어가므로
