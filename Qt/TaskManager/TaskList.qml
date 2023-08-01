@@ -50,11 +50,17 @@ ListView {
                             backgroundRect.getxIndex();
                             xIndex = index;
                             scheduler.removeTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
-                            listView.model = scheduler.getTaskList(); // 화면에 보이는 리스트 갱신
                         }
                     }
                 }
             }
+        }
+    }
+
+    Connections {
+        target: scheduler
+        onTasksChanged: {
+            listView.model = scheduler.getTaskList(); // 화면에 보이는 리스트 갱신
         }
     }
 }

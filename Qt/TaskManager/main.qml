@@ -26,9 +26,10 @@ Window {
     }
 
     ButtonList {
+        id: buttonlist
         x: parent.width * 0.85
         y: 0
         width: parent.width * 0.15
         height: parent.height
-    }
+    }        
 }

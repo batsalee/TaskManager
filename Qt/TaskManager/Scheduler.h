@@ -47,6 +47,10 @@ public:
     Scheduler(QString, QString, QString);
     ~Scheduler();  // 현재 상태 파일에 새로 쓰는 내용 갱신하기
 
+    Q_INVOKABLE void addTask(QString);
     Q_INVOKABLE void removeTask(qint32, qint32);
     Q_INVOKABLE QList<QList<QString>> getTaskList();
+
+signals:
+    void tasksChanged();
 };

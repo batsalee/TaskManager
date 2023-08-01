@@ -60,11 +60,21 @@ void Scheduler::setPath()
 
 /////////////////////////////////////////////////////////////////////////
 
+void Scheduler::addTask(QString task)
+{
+    QList<QString> temp;
+    temp.push_back(task);
+    tasks.push_back(temp);
+
+    emit tasksChanged();
+}
 
 void Scheduler::removeTask(qint32 y, qint32 x)
 {
     tasks[y].removeAt(x);
     if(tasks[y].empty()) tasks.removeAt(y);
+
+    emit tasksChanged();
 }
 
 QList<QList<QString>> Scheduler::getTaskList()

@@ -10,7 +10,8 @@ resources.files = \
                 main.qml \
                 TaskList.qml \
                 ButtonList.qml \
-                Clock.qml
+                Clock.qml \
+                TextInputWindow.qml
 resources.prefix = /$${TARGET}
 RESOURCES += resources
 
@@ -33,4 +34,5 @@ HEADERS += \
 DISTFILES += \
     ButtonList.qml \
     Clock.qml \
-    TaskList.qml
+    TaskList.qml \
+    TextInputWindow.qml
