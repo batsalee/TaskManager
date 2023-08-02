@@ -25,7 +25,7 @@ Window {
         textInput.forceActiveFocus(); // 윈도우가 생성되면서 포커스를 설정하여 보여줌
     }
 
-    function addTask() { 
+    function addTask() {
         scheduler.addTask(textInput.text);
         textInputWindow.close();
         /*
