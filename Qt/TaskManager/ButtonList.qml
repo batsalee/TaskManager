@@ -4,7 +4,7 @@ import QtQuick.Layouts 6.3
 
 Column {
     Button {
-        width:  parent.width
+        width: parent.width
         height: parent.height / 10
         text: qsTr("할일 추가")
 
