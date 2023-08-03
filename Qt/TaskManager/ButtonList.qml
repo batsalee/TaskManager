@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 
-Column {
+Column {   
     Button {
         width: parent.width
         height: parent.height / 10

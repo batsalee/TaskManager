@@ -11,68 +11,26 @@ Window {
     title: qsTr("TaskManager")
     flags: Qt.FramelessWindowHint
 
-    Row { // 제목표시줄의 역할을 대신 해줄 Row
-        Clock {
-            id: clock
-            x: 0
-            y: 0
-            width: mainWindow.width * 0.85
-            height: 30
-
-            MouseArea { // FramelessWindow를 만들되 창은 움직일 수 있어야 하므로
-                anchors.fill: parent
-                onPressed: {
-                    mainWindow.startSystemMove();
-                }
-            }
-        }
-        Button {
-            id: minimize
-            width: mainWindow.width * 0.05
-            height: 30
-            text: qsTr("최소화")
-
-            onClicked: {
-                mainWindow.visibility = Window.Minimized;
-            }
-        }
-
-        Button {
-            id: maximize
-            text: qsTr("최대화")
-            width: mainWindow.width * 0.05
-            height: 30
-
-            onClicked: {
-                if (mainWindow.visibility === Window.Windowed) mainWindow.visibility = Window.Maximized;
-                else mainWindow.visibility = Window.Windowed;
-            }
-        }
-
-        Button {
-            id: quit
-            text: qsTr("종료")
-            width: mainWindow.width * 0.05
-            height: 30
-
-            onClicked: {
-                mainWindow.close();
-            }
-        }
+    TitleBar {
+        id: titlebar
+        x: 0
+        y: 0
+        width: mainWindow.width
+        height: 30
     }
 
     TaskList { // 왼쪽에 표시될 할일들의 리스트 영역
         x: 0
         y: 30
         width: parent.width * 0.85
-        height: parent.height - clock.height
+        height: parent.height - titlebar.height
     }
 
     ButtonList { // 오른쪽에 표시될 버튼들 영역
         x: parent.width * 0.85
         y: 30
         width: parent.width * 0.15
-        height: parent.height - 30
+        height: parent.height - titlebar.height
     }
 
     MouseArea {

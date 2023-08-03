@@ -85,7 +85,7 @@ QList<QList<QString>> Scheduler::getTaskList()
 }
 
 /////////////////////////////////////////////////////////////////////////
-
+// file관리 함수들
 
 // 오늘의 일정 폴더 및 파일 생성
 void Scheduler::createTaskfile()
@@ -143,7 +143,7 @@ void Scheduler::appendDayOfWeekTaskfile()
 
 void Scheduler::appendYesterDayTaskfile()
 {
-    std::string yesterday_path = "./Schedule/data/yesterday.txt";
+    std::string yesterday_path = "./data/yesterday.txt";
 
     std::ifstream in(yesterday_path, std::ios::binary);
     std::ofstream out(path.toStdString(), std::ios::app | std::ios::binary);
@@ -182,7 +182,7 @@ void Scheduler::readTaskfile()
 
 void Scheduler::updateTaskfile()
 {
-    std::ofstream out(path.toStdString(), std::ios::trunc), out2("./Schedule/data/yesterday.txt", std::ios::trunc);
+    std::ofstream out(path.toStdString(), std::ios::trunc), out2("./data/yesterday.txt", std::ios::trunc);
     for(int i = 0; i < tasks.size(); i++) {
         for(int j = 0; j < tasks[i].size(); j++) {
             out << '#' << tasks[i][j].toStdString() << ' ';
