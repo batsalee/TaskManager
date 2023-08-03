@@ -9,7 +9,7 @@ Window {
     visible: true
     color: "#333333"
     title: qsTr("TaskManager")
-    flags: Qt.FramelessWindowHint
+    flags: Qt.FramelessWindowHint | Qt.Window
 
     TitleBar {
         id: titlebar
