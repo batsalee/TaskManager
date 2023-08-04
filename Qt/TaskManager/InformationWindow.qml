@@ -15,8 +15,8 @@ Window {
             anchors.fill: parent
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            anchors.rightMargin: 30
-            anchors.leftMargin: 30
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
             font.pointSize: 10
             color: "#FFFFFF"
             text: qsTr("")
