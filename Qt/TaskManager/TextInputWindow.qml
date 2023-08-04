@@ -6,7 +6,7 @@ Window {
     width: 300
     height: 100
     color: "#FFFFFF"
-    title: "할일 추가"
+    title: qsTr("할일 추가")
 
     TextInput {
         id: textInput

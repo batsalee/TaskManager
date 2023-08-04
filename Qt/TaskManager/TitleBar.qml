@@ -11,8 +11,10 @@ Rectangle {
         /* FramelessWindow를 만들되 창은 움직일 수 있어야 하므로
            타이틀바 쪽을 잡고 드래그하면 창을 옮길 수 있음
         */
-        width: parent.width * 0.85
-        height: 30
+        x: 7
+        y: 7
+        width: (parent.width * 0.85) - 7
+        height: 23
         onPressed: {
             mainWindow.startSystemMove();
         }

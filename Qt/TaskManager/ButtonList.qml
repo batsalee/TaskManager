@@ -34,4 +34,18 @@ Column {
 
         onClicked: folder_opener.openFolder("/Schedule/long_term_goal")
     }
+
+    Button {
+        width: parent.width
+        height: parent.height / 10
+        text: qsTr("제작자 정보")
+
+        onClicked: {
+            var component = Qt.createComponent("InformationWindow.qml");
+            if(component.status === Component.Ready) {
+                var textInputWindow = component.createObject();
+                textInputWindow.show();
+            }
+        }
+    }
 }
