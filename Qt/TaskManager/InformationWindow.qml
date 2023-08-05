@@ -19,7 +19,7 @@ Window {
             anchors.leftMargin: 10
             font.pointSize: 10
             color: "#FFFFFF"
-            text: qsTr("")
+            text: qsTr("https://github.com/batsalee/TaskManager")
         }
     }
 }

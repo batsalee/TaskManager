@@ -11,7 +11,8 @@ resources.files = \
                 TaskList.qml \
                 ButtonList.qml \
                 TitleBar.qml \
-                TextInputWindow.qml \
+                TaskInsertWindow.qml \
+                TaskUpdateWindow.qml \
                 InformationWindow.qml
 
 resources.prefix = /$${TARGET}
@@ -36,6 +37,7 @@ HEADERS += \
 DISTFILES += \
     ButtonList.qml \
     InformationWindow.qml \
+    TaskInsertWindow.qml \
     TaskList.qml \
-    TextInputWindow.qml \
+    TaskUpdateWindow.qml \
     TitleBar.qml

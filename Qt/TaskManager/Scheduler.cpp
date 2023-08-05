@@ -79,6 +79,12 @@ void Scheduler::removeTask(qint32 y, qint32 x)
     emit tasksChanged();
 }
 
+void Scheduler::updateTask(qint32 y, qint32 x, QString updated_task)
+{
+    tasks[y][x] = updated_task;
+    emit tasksChanged();
+}
+
 QList<QList<QString>> Scheduler::getTaskList()
 {
     return tasks;

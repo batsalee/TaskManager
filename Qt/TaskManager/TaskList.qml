@@ -59,6 +59,7 @@ ListView {
                         }
                     }
                     MouseArea {
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
                         width: parent.width
                         height: parent.height
                         onDoubleClicked: {
@@ -66,6 +67,20 @@ ListView {
                             backgroundRect.getxIndex();
                             xIndex = index;
                             scheduler.removeTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
+                        }
+
+                        onClicked: {
+                            if (mouse.button === Qt.RightButton) {
+                                var component = Qt.createComponent("TaskUpdateWindow.qml");
+                                if(component.status === Component.Ready) {
+                                    var taskUpdateWindow = component.createObject();
+
+                                    backgroundRect.getxIndex();
+                                    taskUpdateWindow.y = yIndex;
+                                    taskUpdateWindow.x = index;
+                                    taskUpdateWindow.show();
+                                }
+                            }
                         }
                     }
                 }

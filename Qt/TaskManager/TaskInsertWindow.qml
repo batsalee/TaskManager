@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls 6.3
 
 Window {
-    id: textInputWindow
+    id: taskInsertWindow
     width: 300
     height: 100
     color: "#FFFFFF"
@@ -18,7 +18,7 @@ Window {
 
         Keys.onEnterPressed: addTask()
         Keys.onReturnPressed: addTask()
-        Keys.onEscapePressed: textInputWindow.close();
+        Keys.onEscapePressed: taskInsertWindow.close();
     }
 
     Component.onCompleted: {
@@ -27,7 +27,7 @@ Window {
 
     function addTask() {
         scheduler.addTask(textInput.text);
-        textInputWindow.close();
+        taskInsertWindow.close();
         /*
             사용자입장에서의 제약
             1) 문장의 시작이 @ 혹은 #이면 @/#이 아닌 문자가 나올때까지 다 지워짐

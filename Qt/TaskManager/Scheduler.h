@@ -53,7 +53,8 @@ public:
 
     Q_INVOKABLE void addTask(QString);
     Q_INVOKABLE void removeTask(qint32, qint32);
-    Q_INVOKABLE QList<QList<QString>> getTaskList();
+    Q_INVOKABLE void updateTask(qint32, qint32, QString);
+    Q_INVOKABLE QList<QList<QString>> getTaskList();    
 
 signals:
     void tasksChanged();
