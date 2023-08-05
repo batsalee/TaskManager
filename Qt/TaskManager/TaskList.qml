@@ -66,7 +66,7 @@ ListView {
                             // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                             backgroundRect.getxIndex();
                             xIndex = index;
-                            scheduler.removeTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
+                            scheduler.deleteTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
                         }
 
                         onClicked: {

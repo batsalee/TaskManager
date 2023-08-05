@@ -22,12 +22,10 @@ Window {
         color: "#000000"
 
         Keys.onEnterPressed: {
-            if(textInputWindow.state === 1) updateTask();
-            else if(textInputWindow.state === 0) addTask();
+            textInputWindow.state ? updateTask() : insertTask();
         }
-        Keys.onReturnPressed:  {
-            if(textInputWindow.state === 1) updateTask();
-            else if(textInputWindow.state === 0) addTask();
+        Keys.onReturnPressed: {
+            textInputWindow.state ? updateTask() : insertTask();
         }
         Keys.onEscapePressed: textInputWindow.close();
     }
@@ -41,8 +39,8 @@ Window {
         1) 문장의 시작이 @ 혹은 #이면 @/#이 아닌 문자가 나올때까지 다 지워짐
         2) task중요도를 @와 #을 이용해 구현했기때문에 파싱이 꼬일것을 감안해서 제약을 둠
     */
-    function addTask() {
-        scheduler.addTask(textInput.text);
+    function insertTask() {
+        scheduler.insertTask(textInput.text);
         textInputWindow.close();
 
     }

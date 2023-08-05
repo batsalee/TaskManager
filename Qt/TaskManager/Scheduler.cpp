@@ -51,7 +51,7 @@ void Scheduler::setPath()
 // Q_INVOKABLE 함수들
 
 
-void Scheduler::addTask(QString added_task)
+void Scheduler::insertTask(QString added_task)
 {
     std::string at = added_task.toStdString();
     QList<QString> temp;
@@ -71,17 +71,17 @@ void Scheduler::addTask(QString added_task)
     emit tasksChanged();
 }
 
-void Scheduler::removeTask(qint32 y, qint32 x)
+void Scheduler::updateTask(qint32 y, qint32 x, QString updated_task)
+{
+    tasks[y][x] = updated_task;
+    emit tasksChanged();
+}
+
+void Scheduler::deleteTask(qint32 y, qint32 x)
 {
     tasks[y].removeAt(x);
     if(tasks[y].empty()) tasks.removeAt(y);
 
-    emit tasksChanged();
-}
-
-void Scheduler::updateTask(qint32 y, qint32 x, QString updated_task)
-{
-    tasks[y][x] = updated_task;
     emit tasksChanged();
 }
 
@@ -200,5 +200,5 @@ void Scheduler::updateTaskfile()
     out << '#';
 }
 
-//void Scheduler::removeTaskfile() {} // 일정파일/폴더 제거
+//void Scheduler::deleteTaskfile() {} // 일정파일/폴더 제거
 
