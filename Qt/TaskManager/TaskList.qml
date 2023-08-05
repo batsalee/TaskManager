@@ -71,13 +71,14 @@ ListView {
 
                         onClicked: {
                             if (mouse.button === Qt.RightButton) {
-                                var component = Qt.createComponent("TaskUpdateWindow.qml");
+                                var component = Qt.createComponent("TextInputWindow.qml");
                                 if(component.status === Component.Ready) {
                                     var taskUpdateWindow = component.createObject();
 
                                     backgroundRect.getxIndex();
                                     taskUpdateWindow.y = yIndex;
                                     taskUpdateWindow.x = index;
+                                    taskUpdateWindow.state = 1; // 0은 insert, 1은 update
                                     taskUpdateWindow.show();
                                 }
                             }

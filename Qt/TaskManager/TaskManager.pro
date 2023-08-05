@@ -11,8 +11,7 @@ resources.files = \
                 TaskList.qml \
                 ButtonList.qml \
                 TitleBar.qml \
-                TaskInsertWindow.qml \
-                TaskUpdateWindow.qml \
+                TextInputWindow.qml \
                 InformationWindow.qml
 
 resources.prefix = /$${TARGET}

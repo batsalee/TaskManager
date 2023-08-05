@@ -10,10 +10,11 @@ Column {
 
         onClicked: {
             // textinput 불러와서 작성한 내용 파일에 추가되게
-            var component = Qt.createComponent("TaskInsertWindow.qml");
+            var component = Qt.createComponent("TextInputWindow.qml");
             if(component.status === Component.Ready) {
-                var textInputWindow = component.createObject();
-                textInputWindow.show();
+                var textInsertWindow = component.createObject();
+                textInsertWindow.state = 0; // 0은 insert, 1은 update
+                textInsertWindow.show();
             }
         }
     }
