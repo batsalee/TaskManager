@@ -42,7 +42,6 @@ Window {
     function insertTask() {
         scheduler.insertTask(textInput.text);
         textInputWindow.close();
-
     }
 
     function updateTask() {

@@ -66,7 +66,7 @@ void Scheduler::insertTask(QString added_task)
         if(at != "") temp.push_back(QString::fromStdString(at));
     }
 
-    tasks.push_back(temp);
+    if(temp.size()) tasks.push_back(temp);
 
     emit tasksChanged();
 }
