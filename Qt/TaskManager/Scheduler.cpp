@@ -1,5 +1,8 @@
 #include "Scheduler.h"
 
+//
+#include <QDebug>
+
 Scheduler::Scheduler() // 오늘 일정 관리할때
 {
     getTodaysDate();
@@ -135,7 +138,11 @@ void Scheduler::createTaskfile()
 
 void Scheduler::appendDayOfWeekTaskfile()
 {
-    std::string days[7] = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "Saturday"};
+    std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+
+    //
+    qDebug() << this->dayOfWeek.toInt();
+
     std::string days_path = "./Schedule/fixed_schdule/" + days[this->dayOfWeek.toInt()] + ".txt";
 
     std::ifstream in(days_path, std::ios::binary);
