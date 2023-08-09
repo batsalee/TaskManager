@@ -5,6 +5,7 @@ ListView {
     id: listView
     clip: true
     model: scheduler.getTaskList()
+    boundsBehavior: Flickable.StopAtBounds
 
     property int scroll_height // 스크롤된 상태에서 더블클릭으로 지울때 contentY가 유지되도록 하기 위해
 
@@ -113,10 +114,5 @@ ListView {
 
             listView.contentY = (listView.model.length * 30) - (mainWindow.height - 30);
         }
-    }
-
-    //
-    Component.onCompleted: {
-        listView.forceActiveFocus();
     }
 }
