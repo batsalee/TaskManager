@@ -57,5 +57,6 @@ public:
     Q_INVOKABLE QList<QList<QString>> getTaskList();    
 
 signals:
-    void tasksChanged();
+    void tasksChanged(); // 할일 변경/삭제시 listView 스크롤 상태를 유지하면서 값을 새로 갱신
+    void tasksInserted(); // 할일 추가시 listView 스크롤을 가장 아래로 내리면서 가장 아래에 값을 추가
 };
