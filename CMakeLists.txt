@@ -15,7 +15,14 @@ endif()
 
 qt_add_executable(TaskManagerApp src/main.cpp
     src/rapidjson/
-    src/JsonManager.h)
+    src/JsonManager.h
+    src/FileManager.h
+    src/FileReader.h
+    src/FileReader.cpp
+    src/JsonParser.h
+    src/JsonParser.cpp
+    src/Schedule.h
+    src/Schedule.cpp)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"

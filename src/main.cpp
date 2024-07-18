@@ -8,6 +8,16 @@
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
 
+// 내가 추가한 헤더들
+#include <iostream>
+#include <fstream>
+#include "FileReader.h"
+#include "JsonManager.h"
+#include "Schedule.h"
+
+
+//
+
 int main(int argc, char *argv[])
 {
     set_qt_environment();
@@ -34,6 +44,36 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty()) {
         return -1;
     }
+
+    // 내 코드 시작
+
+
+    // 1) 파일 열기
+    // 나중에 Date가 여기로 값 주도록 변경
+    FileReader fr("./Schedule/test.json"); // FileReader 객체 생성
+    std::ifstream&& ifs = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
+    std::string fileContent((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+
+    // 2) 파일 내용 json으로 파싱
+    Document document;
+    try {
+        if (document.Parse(fileContent.c_str()).HasParseError())
+            throw std::runtime_error("손상된 일정 파일입니다.");
+    }
+    catch(const std::runtime_error& re) {
+        std::cerr << re.what() << '\n';
+        std::cerr << GetParseError_En(document.GetParseError()) << " (" << document.GetErrorOffset() << ")\n";
+    }
+
+    // 3) 해석된 json 내용 이중 QList에 넣기
+    Schedule schedule; // 이중리스트 관리자
+    schedule.MakeScheduleList(document);
+
+
+
+
+
+    // 내 코드 끝
 
     return app.exec();
 }
