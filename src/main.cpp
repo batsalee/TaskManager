@@ -51,13 +51,12 @@ int main(int argc, char *argv[])
     // 1) 파일 열기
     // 나중에 Date가 여기로 값 주도록 변경
     FileReader fr("./Schedule/test.json"); // FileReader 객체 생성
-    std::ifstream&& ifs = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
-    std::string fileContent((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+    std::string&& file_content = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
 
     // 2) 파일 내용 json으로 파싱
     Document document;
     try {
-        if (document.Parse(fileContent.c_str()).HasParseError())
+        if (document.Parse(file_content.c_str()).HasParseError())
             throw std::runtime_error("손상된 일정 파일입니다.");
     }
     catch(const std::runtime_error& re) {

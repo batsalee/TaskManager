@@ -1,8 +1,9 @@
 #include "FileReader.h"
 
-std::ifstream FileReader::readFile()
+std::string FileReader::readFile()
 {
     std::ifstream ifs(file_path);
-    return ifs;
+    std::string file_content((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+    return file_content;
 }
 

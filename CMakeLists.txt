@@ -22,7 +22,8 @@ qt_add_executable(TaskManagerApp src/main.cpp
     src/JsonParser.h
     src/JsonParser.cpp
     src/Schedule.h
-    src/Schedule.cpp)
+    src/Schedule.cpp
+    qml/ButtonList.qml qml/InformationWindow.qml qml/Resizer.qml qml/TaskList.qml qml/TextInputWindow.qml qml/TitleBar.qml)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"
