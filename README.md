@@ -294,3 +294,43 @@ main.qml에 import "./qml"를 추가해줬는데 이게 제대로 된 해결법�
 나) 다음 계획  
 일단 어찌됐든 qml도 포팅해줬으니 다음 목표는 Schedule 객체가 관리하는 이중리스트와 qml의 taskList간의 연동이다.  
 둘이 연동이 되야 일단 내용이 잘 왔는지, 잘 지워지고 있는지 확인이 가능하므로  
+
+#### 2024-07-22
+16:51  
+Schedule클래스의 scheduler 객체와 qml간의 integration 완료  
+
+이건 version 1.0부터 integration하는 방법이 너무 여러종류가 뭘 써야하는지 도저히 몰라서 이것저것 썼었는데 여기서부턴 Q_PROPERTY로 통합해서 작성하는걸로 결정  
+```C++
+#include <QObject>
+
+class Schedule : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QList<QList<QString>> schedule_list READ GetScheduleList NOTIFY ListChanged)
+...
+
+signals:
+    void ListChanged();
+}
+```
+위처럼 QObject 상속받고, Q_OBJECT매크로 걸어주고, Q_PROPERTY에 내용 나열해주면 된다.  
+
+Q_PROPERTY에 대한 설명을 남겨두자면  
+1) 첫번째에 있는 schedule_list는 qml쪽에서 접근할 이름을 지정해준 것
+2) READ에 작성하는 함수는 qml에서 schedule_list이라는 이름으로 접근시 어떤 함수를 사용하면 될지 지정
+3) WRITE함수도 작성할 수 있는데 여기선 안했는데 이건 qml에서 schedule_list라는 이름으로 뭔가 변경했을때 어떤 함수가 해당 내용을 반영할지 지정
+4) NOTIFY는 변경이 발생했을때 일으킬 signal을 지정, 주로 WRITE함수쪽에서 변경 후 emit으로 시그널 발생
+
+여기까지 완성 후 qml쪽에 내용이 뜨는것까지 확인 완료  
+![](https://blog.kakaocdn.net/dn/w1NsM/btsII0o7mOI/6KHlgS2me1gIYvKQDUi840/img.png)
+근데 뭔가 줄간격이나 버튼 모양같은게 version1.0 qml을 그대로 가져온건데도 조금씩 달라져있어서 해당 부분은 나중에 기능조정 후에 디자인 조정좀 해야할것같음  
+
+20:02  
+Schedule 클래스의 insertTask, updateTask, deleteTask함수 구현 및 qml과 연동 완료  
+값 변경을 위해 우클릭시 기존의 값이 뜨도록 qml 구조 변경  
+  
+새로 발생한 고민  
+기존엔 할일 문자열 자체에 #, @, ★을 포함시켜서 일의 중요도를 표시했었음  
+근데 지금 json 배열로 사용하려고 보니 해당 중요도를 포함시킬 방법이 없는 상황  
+그래서 결국 json 배열 구조를 배열안에 객체가 들어가게 해서 객체가 중요도를 포함하게 할지 고민중  
+혹은 문자열 자체에 포함시키는것도 방법인데 기존에 C#같은걸 입력하려면 \#때문에 문제가 됐어서 제약이 좀 있음  
