@@ -4,7 +4,7 @@ import QtQuick.Layouts 6.3
 ListView {
     id: listView
     clip: true
-    model: scheduler.getTaskList()
+    model: scheduler.schedule_list
     boundsBehavior: Flickable.StopAtBounds
 
     property int scroll_height // 스크롤된 상태에서 더블클릭으로 지울때 contentY가 유지되도록 하기 위해

@@ -15,7 +15,7 @@
 #include "JsonManager.h"
 #include "Schedule.h"
 
-
+#include <QQmlContext>
 //
 
 int main(int argc, char *argv[])
@@ -23,27 +23,9 @@ int main(int argc, char *argv[])
     set_qt_environment();
 
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreated,
-        &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
 
-    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
-    engine.addImportPath(":/");
 
-    engine.load(url);
-
-    if (engine.rootObjects().isEmpty()) {
-        return -1;
-    }
 
     // 내 코드 시작
 
@@ -65,14 +47,35 @@ int main(int argc, char *argv[])
     }
 
     // 3) 해석된 json 내용 이중 QList에 넣기
-    Schedule schedule; // 이중리스트 관리자
-    schedule.MakeScheduleList(document);
-
+    Schedule scheduler; // 이중리스트 관리자
+    scheduler.MakeScheduleList(document);
+    engine.rootContext()->setContextProperty("scheduler", &scheduler); // qml이랑 integration
 
 
 
 
     // 내 코드 끝
+
+
+    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
+    QObject::connect(
+        &engine,
+        &QQmlApplicationEngine::objectCreated,
+        &app,
+        [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
+
+    engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
+    engine.addImportPath(":/");
+
+    engine.load(url);
+
+    if (engine.rootObjects().isEmpty()) {
+        return -1;
+    }
 
     return app.exec();
 }

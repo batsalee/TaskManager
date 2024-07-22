@@ -19,3 +19,16 @@ void Schedule::MakeScheduleList(Document& document)
         }
     }
 }
+
+QList<QList<QString>> Schedule::GetScheduleList()
+{
+    return schedule_list;
+}
+
+Q_INVOKABLE void Schedule::EraseTask(int y, int x)
+{
+    schedule_list[y].removeAt(x);
+    if(schedule_list[y].empty()) schedule_list.removeAt(y);
+
+    emit ListChanged();
+}
