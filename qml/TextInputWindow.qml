@@ -9,6 +9,7 @@ Window {
     property int y;
     property int x;
     property int state; // 0은 insert, 1은 update
+    property string context;
     title: {
         state ? qsTr("내용 변경") : qsTr("할일 추가");
     }
@@ -20,6 +21,7 @@ Window {
         cursorVisible: true
         font.pointSize: 12
         color: "#000000"
+        text: context
 
         Keys.onEnterPressed: {
             textInputWindow.state ? updateTask() : insertTask();

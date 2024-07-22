@@ -15,11 +15,19 @@ private:
     QList<QList<QString>> schedule_list;
 
 public:
+    // »ý¼ºÀÚ
     Schedule() = default;
 
+    // init
     void MakeScheduleList(Document& document);
+
+    // getter
     QList<QList<QString>> GetScheduleList();
-    Q_INVOKABLE void EraseTask(int y, int x);
+
+    // setter
+    Q_INVOKABLE void insertTask(QString);
+    Q_INVOKABLE void updateTask(qint32, qint32, QString);
+    Q_INVOKABLE void deleteTask(qint32, qint32);
 
 signals:
     void ListChanged();

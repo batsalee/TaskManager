@@ -87,6 +87,7 @@ ListView {
                                     taskUpdateWindow.y = yIndex;
                                     taskUpdateWindow.x = index;
                                     taskUpdateWindow.state = 1; // 0은 insert, 1은 update
+                                    taskUpdateWindow.context = modelData;
                                     taskUpdateWindow.show();
                                 }
                             }
