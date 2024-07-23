@@ -24,7 +24,9 @@ qt_add_executable(TaskManagerApp src/main.cpp
     src/Schedule.h
     src/Schedule.cpp
     qml/ButtonList.qml qml/InformationWindow.qml qml/Resizer.qml qml/TaskList.qml qml/TextInputWindow.qml qml/TitleBar.qml
-    src/Task.h)
+    src/Task.h
+    src/FileWriter.h
+    src/FileWriter.cpp)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"

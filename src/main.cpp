@@ -1,8 +1,7 @@
-// Copyright (C) 2021 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
-
+// Qt 관련 header
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
@@ -10,13 +9,11 @@
 
 // 내가 추가한 헤더들
 #include <iostream>
-#include <fstream>
+
 #include "FileReader.h"
+#include "FileWriter.h"
 #include "JsonManager.h"
 #include "Schedule.h"
-
-#include <QQmlContext>
-//
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +30,7 @@ int main(int argc, char *argv[])
     // 1) 파일 열기
     // 나중에 Date가 여기로 값 주도록 변경
     FileReader fr("./Schedule/test.json"); // FileReader 객체 생성
-    std::string&& file_content = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
+    std::string&& file_content = fr.ReadFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
 
     // 2) 파일 내용 json으로 파싱
     Document document;
@@ -48,14 +45,17 @@ int main(int argc, char *argv[])
 
     // 3) 해석된 json 내용 이중 QList에 넣기
     Schedule scheduler; // 이중리스트 관리자
-    scheduler.MakeScheduleList(document);
+    scheduler.ConvertJsonToScheduleList(document);
 
     qRegisterMetaType<Task>("Task"); // Task 구조체 QML에 등록
     engine.rootContext()->setContextProperty("scheduler", &scheduler); // qml이랑 integration
 
-
-
-
+/*
+    // 종료시점에 이중리스트 -> json변환 및 저장 테스트
+    std::string json_for_saving = scheduler.ConvertScheduleListToJson();
+    FileWriter fw("./Schedule/test2.json");
+    fw.WriteFile(json_for_saving);
+*/
 
     // 내 코드 끝
 

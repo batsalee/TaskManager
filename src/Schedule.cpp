@@ -1,11 +1,14 @@
 #include "Schedule.h"
 
+//
+#include "FileWriter.h"
+
 /*
 MakeScheduleList()
 용도 : init, 처음 해당 날짜의 일정파일을 열때 호출
 시퀀스 : FileReader가 파일을 읽어주면 JsonParser가 파싱하고 해당 내용을 MakeScheduleList()가 이중리스트에 담음
 */
-void Schedule::MakeScheduleList(Document& document)
+void Schedule::ConvertJsonToScheduleList(Document& document)
 {
     if (document.HasMember("Schedule") && document["Schedule"].IsArray()) {
         const Value& json_array = document["Schedule"];
@@ -33,6 +36,72 @@ void Schedule::MakeScheduleList(Document& document)
         }
     }
 }
+/*
+
+// schedule_list -> json 테스트중
+std::string Schedule::ConvertScheduleListToJson() const {
+    Document document;
+    document.SetObject();
+    Document::AllocatorType& allocator = document.GetAllocator();
+
+    Value scheduleArray(kArrayType);
+
+    for (const auto& innerList : schedule_list) {
+        Value innerArray(kArrayType);
+        for (const auto& task : innerList) {
+            Value taskObject(kObjectType);
+            taskObject.AddMember("title", StringRef(task.title.toUtf8().constData()), allocator);
+            taskObject.AddMember("importance", task.importance, allocator);
+            innerArray.PushBack(taskObject, allocator);
+        }
+        scheduleArray.PushBack(innerArray, allocator);
+    }
+
+    document.AddMember("Schedule", scheduleArray, allocator);
+
+    StringBuffer buffer;
+    PrettyWriter<StringBuffer> writer(buffer);  // PrettyWriter를 사용
+    document.Accept(writer);
+
+    return buffer.GetString();
+}
+*/
+
+// 소멸시점에 값을 저장하게 만든다면?
+// 종료시점에 이중리스트 -> json변환 및 저장 테스트
+Schedule::~Schedule()
+{
+    Document document;
+    document.SetObject();
+    Document::AllocatorType& allocator = document.GetAllocator();
+
+    Value scheduleArray(kArrayType);
+
+    for (const auto& innerList : schedule_list) {
+        Value innerArray(kArrayType);
+        for (const auto& task : innerList) {
+            Value taskObject(kObjectType);
+            taskObject.AddMember("title", StringRef(task.title.toUtf8().constData()), allocator);
+            taskObject.AddMember("importance", task.importance, allocator);
+            innerArray.PushBack(taskObject, allocator);
+        }
+        scheduleArray.PushBack(innerArray, allocator);
+    }
+
+    document.AddMember("Schedule", scheduleArray, allocator);
+
+    StringBuffer buffer;
+    PrettyWriter<StringBuffer> writer(buffer);  // PrettyWriter를 사용
+    document.Accept(writer);
+
+
+    std::string json_for_saving = buffer.GetString();
+    FileWriter fw("./Schedule/test2.json");
+    fw.WriteFile(json_for_saving);
+}
+
+
+
 
 /*
 GetScheduleList()

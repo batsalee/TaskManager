@@ -34,34 +34,17 @@ ListView {
                     height: scheduleText.height
                     border.width: 1.5
                     radius: 10
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter                                      
+
                     Text {
                         id: scheduleText
                         x: 5
                         anchors.centerIn: parent
                         font.pointSize: 12
                         font.bold: true
-                        text: {
-                            if(modelData.importance == 1) {
-                                rectangle.color = "#333333"
-                                rectangle.border.color = "#DDBB88"
-                                scheduleText.text = modelData.title
-                                scheduleText.color = "#DDBB88"
-                            }
-                            else if(modelData.importance == 2) {
-                                rectangle.color = "#BB3377"
-                                rectangle.border.color = "#BB3377"
-                                scheduleText.text = modelData.title
-                                scheduleText.color = "#AAAAAA"
-                            }
-                            else {
-                                rectangle.color = "#33AABB"
-                                rectangle.border.color = "#33AABB"
-                                scheduleText.text = modelData.title
-                                scheduleText.color = "#FFFFFF"
-                            }
-                        }
+                        text: modelData.title
                     }
+
                     MouseArea {
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         width: parent.width
@@ -87,10 +70,26 @@ ListView {
                                     taskUpdateWindow.y = yIndex;
                                     taskUpdateWindow.x = index;
                                     taskUpdateWindow.state = 1; // 0은 insert, 1은 update
-                                    taskUpdateWindow.context = modelData;
+                                    taskUpdateWindow.context = modelData.title;
                                     taskUpdateWindow.show();
                                 }
-                            }
+                            }                       
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        if (modelData.importance == 1) {
+                            rectangle.color = "#333333"
+                            rectangle.border.color = "#DDBB88"
+                            scheduleText.color = "#DDBB88"
+                        } else if (modelData.importance == 2) {
+                            rectangle.color = "#BB3377"
+                            rectangle.border.color = "#BB3377"
+                            scheduleText.color = "#AAAAAA"
+                        } else {
+                            rectangle.color = "#33AABB"
+                            rectangle.border.color = "#33AABB"
+                            scheduleText.color = "#FFFFFF"
                         }
                     }
                 }

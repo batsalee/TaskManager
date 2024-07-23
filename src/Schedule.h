@@ -18,9 +18,13 @@ private:
 public:
     // »ý¼ºÀÚ
     Schedule() = default;
+    ~Schedule();
 
     // init
-    void MakeScheduleList(Document& document);
+    void ConvertJsonToScheduleList(Document&);
+
+    // exit
+    std::string ConvertScheduleListToJson() const;
 
     // getter
     QList<QList<Task>> GetScheduleList();
