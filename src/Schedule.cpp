@@ -14,9 +14,18 @@ void Schedule::MakeScheduleList(Document& document)
             if (json_array[i].IsArray()) {
                 const Value& inner_array = json_array[i];
 
-                QList<QString> inner_list;
+                QList<Task> inner_list;
                 for (int j = 0; j < inner_array.Size(); j++) {
-                    inner_list.push_back(inner_array[j].GetString());
+                    if (inner_array[j].IsObject()) {
+                        Task task;
+                        if (inner_array[j].HasMember("title") && inner_array[j]["title"].IsString()) {
+                            task.title = inner_array[j]["title"].GetString();
+                        }
+                        if (inner_array[j].HasMember("importance") && inner_array[j]["importance"].IsInt()) {
+                            task.importance = inner_array[j]["importance"].GetInt();
+                        }
+                        inner_list.push_back(task);
+                    }
                     // 만약 인코딩 문제가 생긴다면 UTF-8 to EUC-KR 코드 여기에 넣기
                 }
                 schedule_list.push_back(inner_list);
@@ -30,7 +39,7 @@ GetScheduleList()
 용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
 시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음
 */
-QList<QList<QString>> Schedule::GetScheduleList()
+QList<QList<Task>> Schedule::GetScheduleList()
 {
     return schedule_list;
 }
@@ -44,7 +53,7 @@ insertTask()
 */
 Q_INVOKABLE void Schedule::insertTask(QString inserted_task)
 {
-    QList<QString> new_schedule_list = {inserted_task}; // 새로 추가될 QList
+    QList<Task> new_schedule_list = { Task{inserted_task, 1} }; // 새로 추가될 QList
     schedule_list.push_front(new_schedule_list);
     emit ListChanged();
 }
@@ -56,7 +65,7 @@ updateTask()
 */
 Q_INVOKABLE void Schedule::updateTask(qint32 y, qint32 x, QString updated_task)
 {
-    schedule_list[y][x] = updated_task;
+    schedule_list[y][x].title = updated_task;
     emit ListChanged();
 }
 

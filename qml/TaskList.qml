@@ -42,22 +42,22 @@ ListView {
                         font.pointSize: 12
                         font.bold: true
                         text: {
-                            if(modelData.startsWith("★")) {
+                            if(modelData.importance == 1) {
                                 rectangle.color = "#333333"
                                 rectangle.border.color = "#DDBB88"
-                                scheduleText.text = modelData
+                                scheduleText.text = modelData.title
                                 scheduleText.color = "#DDBB88"
                             }
-                            else if(modelData.startsWith("@")) {
+                            else if(modelData.importance == 2) {
                                 rectangle.color = "#BB3377"
                                 rectangle.border.color = "#BB3377"
-                                scheduleText.text = modelData.substr(1);
+                                scheduleText.text = modelData.title
                                 scheduleText.color = "#AAAAAA"
                             }
                             else {
                                 rectangle.color = "#33AABB"
                                 rectangle.border.color = "#33AABB"
-                                scheduleText.text = modelData;
+                                scheduleText.text = modelData.title
                                 scheduleText.color = "#FFFFFF"
                             }
                         }
@@ -98,6 +98,7 @@ ListView {
         }
     }
 
+    /*
     Connections {
         target: scheduler
 
@@ -116,4 +117,5 @@ ListView {
             listView.contentY = (listView.model.length * 30) - (mainWindow.height - 30);
         }
     }
+    */
 }

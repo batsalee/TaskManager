@@ -4,15 +4,16 @@
 #include <QString>
 #include <QList>
 #include "JsonManager.h"
+#include "Task.h"
 using namespace rapidjson;
 
 class Schedule : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<QList<QString>> schedule_list READ GetScheduleList NOTIFY ListChanged)
+    Q_PROPERTY(QList<QList<Task>> schedule_list READ GetScheduleList NOTIFY ListChanged)
 
 private:
-    QList<QList<QString>> schedule_list;
+    QList<QList<Task>> schedule_list;
 
 public:
     // »ý¼ºÀÚ
@@ -22,7 +23,7 @@ public:
     void MakeScheduleList(Document& document);
 
     // getter
-    QList<QList<QString>> GetScheduleList();
+    QList<QList<Task>> GetScheduleList();
 
     // setter
     Q_INVOKABLE void insertTask(QString);

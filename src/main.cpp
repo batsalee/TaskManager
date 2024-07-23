@@ -49,7 +49,10 @@ int main(int argc, char *argv[])
     // 3) 해석된 json 내용 이중 QList에 넣기
     Schedule scheduler; // 이중리스트 관리자
     scheduler.MakeScheduleList(document);
+
+    qRegisterMetaType<Task>("Task"); // Task 구조체 QML에 등록
     engine.rootContext()->setContextProperty("scheduler", &scheduler); // qml이랑 integration
+
 
 
 
