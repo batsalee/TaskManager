@@ -334,3 +334,73 @@ Schedule 클래스의 insertTask, updateTask, deleteTask함수 구현 및 qml과
 근데 지금 json 배열로 사용하려고 보니 해당 중요도를 포함시킬 방법이 없는 상황  
 그래서 결국 json 배열 구조를 배열안에 객체가 들어가게 해서 객체가 중요도를 포함하게 할지 고민중  
 혹은 문자열 자체에 포함시키는것도 방법인데 기존에 C#같은걸 입력하려면 \#때문에 문제가 됐어서 제약이 좀 있음  
+
+#### 2024-07-23
+18:11  
+어제의 고민이었던 Task의 중요도 표현에 대한 개선 완료  
+
+애초에 내가 인터프리터 클래스를 직접 구현하는게 아니라 xml이나 json을 선택하기위해 고민했던 이유부터가 실제 내용과 중요도의 분리때문이었는데 json의 기능 자체에 집중하느라 위 사실을 잊고있었다.  
+
+해결방법으로는 `QList<QList<QString>>` 형태로 이중리스트를 보관하는게 아니라  
+Task라는 struct를 만들고, struct의 멤버변수로 제목과 중요도를 표현하게 하고  `QList<QList<Task>>` 형태로 변경했다.  
+이를 위해 Task라는 구조체가 qml에서 사용될 수 있도록 등록하는 단계가 필요했다.  
+아래 내용이 Task 구조체의 내용이다.  
+```C++
+#pragma once
+
+#include <QObject>
+#include <QString>
+#include <QMetaType>
+
+using Task = struct task {
+    Q_GADGET
+    Q_PROPERTY(QString title MEMBER title)
+    Q_PROPERTY(qint32 importance MEMBER importance)
+
+public:
+    QString title;
+    qint32 importance;
+};
+
+Q_DECLARE_METATYPE(Task)
+```
+위처럼 Q_GADGET같은 매크로나 Q_DECLARE_METATYPE(Task)같은 키워드로 Task를 qml에서 사용 가능한 타입으로 등록해주는 과정이 필요했다.  
+그 후 qml측에서 modelData.title이나 modelData.importance같은 형태로 호출해서 사용 가능해졌다.  
+이제 C# 같은 문구도 자유롭게 사용 가능할듯하다.  
+
+19:46  
+가) 해결한 일  
+프로그램 종료시점에는 이중리스트를 다시 json으로 파싱하고, 파싱한 내용을 파일에 작성해야한다.  
+이를 위해 rapidjson의 기능들로 json이 담긴 string을 만들고 fstream의 ofstream으로 파일 내용을 갱신해야 한다.  
+위 기능까지는 이미 기존에 version 1.0에서 사용한 코드중 일부를 가져오거나, rapidjson 라이브러리 예시코드를 잘 활용해서 구현은 해냈다.  
+
+나) 문제점  
+(1) qml쪽에서 디테일한 부분에서의 문제  
+Task를 새로 insert하거나, 기존의 Task를 delete할때 스크롤이 가장 위로 올라가버린다.  
+난 기존의 위치를 유지하기를 원한다.  
+version 1.0에서도 같은 문제가 발생해서 해결했던 내용이다.  
+근데 qml 구조를 변경하고, C++과 qml의 integration 구조를 변경하다보니 이 문제가 다시 발생하고있다.  
+디테일을 따질때 해결해야 할 문제이므로 당장에 해결하기보다 나중을 위해 기록해둔다.  
+
+(2) JsonManager 및 하위 클래스들의 필요성이 너무 없다.  
+대부분의 내용을 rapidjson 라이브러리가 해결해주다보니 두 클래스는 그냥 rapidjson 헤더들을 포함하고 정작 내용은 없는 헤더가 되어버렸다.  
+그래서 지금 생각은 Schedule클래스의 현 ConvertJsonToScheduleList(구 MakeScheduleList)함수가 사실상 Json to 이중리스트 함수이므로 JsonParser 클래스로 해당 내용을 옮길까 생각도 하고있다.  
+
+(3) 오늘 작성한 json파싱 및 파일저장 코드를 어디에 반영하느냐이다.  
+Schedule 클래스의 소멸자에 작성하면 가장 쉽긴한데 Schedule클래스와 FileWriter 클래스의 의존성이 너무 강해진다.  
+기존에 있던 Make이중리스트 함수도 의존성때문에 분리할지 고민하던 참인데 이것까지 합치는게 맞나 싶다.  
+어찌해야 할까 이 고민이 오늘의 작업을 마무리하면서 남은 과제인듯하다.  
+
+이 고민을 하는 이유는 차후에 오늘의 일정뿐 아니라 다른 날의 일정도 창에 띄우게 만들지도 모른다.  
+그럼 그냥 소멸자가 아닌 Update함수를 호출해야 할수도 있다.  
+이러면 그냥 종료시점에 Update함수를 호출하게 만드는게 맞을지도 모른다.  
+이 상황을 생각하지 않는다면 두가지 방법정도가 있을듯하다.  
+- 소멸자에 작성(가장 쉬운 방법)
+- 종료시점에 발생하는 시그널에 슬롯함수를 연결
+```C++
+QObject::connect(&app, &QCoreApplication::aboutToQuit, cleanupFunction);
+```
+위 코드는 app이 종료되는 순간 aboutToQuit시그널을 발생시키며, 그에 대한 슬롯함수로  cleanupFunction을 내가 작성해서 연결해주는 내용이다.  
+
+아무튼 오늘 밤사이엔 구현을 어디쪽에 해야할지 고민해봐야겠다.  
+당장에야 소멸자에 구현해두고 다른 디테일들을 구현하는게 나을지도 모르겠다.  
