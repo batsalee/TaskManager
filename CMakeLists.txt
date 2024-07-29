@@ -13,32 +13,21 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
-qt_add_executable(TaskManagerApp src/main.cpp
-    src/rapidjson/
-    src/JsonManager.h
-    src/FileManager.h
-    src/FileReader.h
-    src/FileReader.cpp
-    src/JsonParser.h
-    src/JsonParser.cpp
-    src/Schedule.h
-    src/Schedule.cpp
-    qml/ButtonList.qml qml/InformationWindow.qml qml/Resizer.qml qml/TaskList.qml qml/TextInputWindow.qml qml/TitleBar.qml
-    src/Task.h
-    src/FileWriter.h
-    src/FileWriter.cpp
-    src/JsonSerializer.h
-    src/JsonSerializer.cpp
-    src/Date.h
-    src/Date.cpp
-    src/FolderOpener.h
-    src/FolderOpener.cpp
-    src/ScheduleFactory.h
-    src/ScheduleFactory.cpp
-    src/TodayScheduleFactory.h
-    src/TodayScheduleFactory.cpp
-    src/AnotherdayScheduleFactory.h
-    src/AnotherdayScheduleFactory.cpp)
+# 소스 파일 추가
+file(GLOB_RECURSE SOURCES
+    src/*
+)
+
+# QML 파일 추가
+file(GLOB QML_FILES
+    qml/*
+)
+
+# 실행 파일 생성
+qt_add_executable(TaskManagerApp
+    ${SOURCES}
+    ${QML_FILES}
+)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"
