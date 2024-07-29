@@ -3,7 +3,7 @@ import QtQuick.Controls 6.3
 
 Window {
     id: textInputWindow
-    width: 300
+    width: 400
     height: 100
     title: qsTr("Information")
 

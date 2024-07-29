@@ -8,5 +8,5 @@ public:
     FileReader() = default;
     FileReader(std::string path) { file_path = path; }
 
-    std::string ReadFile();
+    std::string readFile();
 };

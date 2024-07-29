@@ -14,6 +14,7 @@
 #include "FileWriter.h"
 #include "JsonManager.h"
 #include "Schedule.h"
+#include "FolderOpener.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,11 +27,14 @@ int main(int argc, char *argv[])
 
     // 내 코드 시작
 
+    // 0) 사전준비
+    FolderOpener folder_opener;
+    engine.rootContext()->setContextProperty("folder_opener", &folder_opener);
 
     // 1) 파일 열기
     // 나중에 Date가 여기로 값 주도록 변경
     FileReader fr("./Schedule/test.json"); // FileReader 객체 생성
-    std::string&& file_content = fr.ReadFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
+    std::string&& file_content = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
 
     // 2) 파일 내용 json으로 파싱
     Document document;
@@ -50,12 +54,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Task>("Task"); // Task 구조체 QML에 등록
     engine.rootContext()->setContextProperty("scheduler", &scheduler); // qml이랑 integration
 
-/*
-    // 종료시점에 이중리스트 -> json변환 및 저장 테스트
-    std::string json_for_saving = scheduler.ConvertScheduleListToJson();
-    FileWriter fw("./Schedule/test2.json");
-    fw.WriteFile(json_for_saving);
-*/
+
 
     // 내 코드 끝
 

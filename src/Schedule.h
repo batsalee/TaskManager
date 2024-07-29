@@ -10,10 +10,10 @@ using namespace rapidjson;
 class Schedule : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<QList<Task>> schedule_list READ GetScheduleList NOTIFY ListChanged)
+    Q_PROPERTY(QList<QList<Task>> task_list READ GetScheduleList NOTIFY ListChanged)
 
 private:
-    QList<QList<Task>> schedule_list;
+    QList<QList<Task>> task_list;
 
 public:
     // »ý¼ºÀÚ

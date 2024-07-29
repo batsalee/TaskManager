@@ -8,5 +8,5 @@ public:
     FileWriter() = default;
     FileWriter(std::string path) { file_path = path; }
 
-    void WriteFile(std::string&);
+    void writeFile(std::string&);
 };

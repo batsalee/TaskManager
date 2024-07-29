@@ -31,14 +31,13 @@ void Schedule::ConvertJsonToScheduleList(Document& document)
                     }
                     // 만약 인코딩 문제가 생긴다면 UTF-8 to EUC-KR 코드 여기에 넣기
                 }
-                schedule_list.push_back(inner_list);
+                task_list.push_back(inner_list);
             }
         }
     }
 }
-/*
 
-// schedule_list -> json 테스트중
+/* task_list -> json 테스트중
 std::string Schedule::ConvertScheduleListToJson() const {
     Document document;
     document.SetObject();
@@ -46,7 +45,7 @@ std::string Schedule::ConvertScheduleListToJson() const {
 
     Value scheduleArray(kArrayType);
 
-    for (const auto& innerList : schedule_list) {
+    for (const auto& innerList : task_list) {
         Value innerArray(kArrayType);
         for (const auto& task : innerList) {
             Value taskObject(kObjectType);
@@ -77,7 +76,7 @@ Schedule::~Schedule()
 
     Value scheduleArray(kArrayType);
 
-    for (const auto& innerList : schedule_list) {
+    for (const auto& innerList : task_list) {
         Value innerArray(kArrayType);
         for (const auto& task : innerList) {
             Value taskObject(kObjectType);
@@ -97,7 +96,7 @@ Schedule::~Schedule()
 
     std::string json_for_saving = buffer.GetString();
     FileWriter fw("./Schedule/test2.json");
-    fw.WriteFile(json_for_saving);
+    fw.writeFile(json_for_saving);
 }
 
 
@@ -110,7 +109,7 @@ GetScheduleList()
 */
 QList<QList<Task>> Schedule::GetScheduleList()
 {
-    return schedule_list;
+    return task_list;
 }
 
 /*
@@ -122,8 +121,8 @@ insertTask()
 */
 Q_INVOKABLE void Schedule::insertTask(QString inserted_task)
 {
-    QList<Task> new_schedule_list = { Task{inserted_task, 1} }; // 새로 추가될 QList
-    schedule_list.push_front(new_schedule_list);
+    QList<Task> new_task_list = { Task{inserted_task, 1} }; // 새로 추가될 QList
+    task_list.push_front(new_task_list);
     emit ListChanged();
 }
 
@@ -134,19 +133,19 @@ updateTask()
 */
 Q_INVOKABLE void Schedule::updateTask(qint32 y, qint32 x, QString updated_task)
 {
-    schedule_list[y][x].title = updated_task;
+    task_list[y][x].title = updated_task;
     emit ListChanged();
 }
 
 /*
 deleteTask()
 용도 : 사용자가 할일의 내용을 완료해서 목록에서 지우고 싶을때 호출
-시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle 중 사용자가 완료한 task를 더블클릭하면 이 함수가 호출되어 해당 내용이 schedule_list에서 지워짐
+시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle 중 사용자가 완료한 task를 더블클릭하면 이 함수가 호출되어 해당 내용이 task_list에서 지워짐
 */
 Q_INVOKABLE void Schedule::deleteTask(int y, int x)
 {
-    schedule_list[y].removeAt(x);
-    if(schedule_list[y].empty()) schedule_list.removeAt(y);
+    task_list[y].removeAt(x);
+    if(task_list[y].empty()) task_list.removeAt(y);
 
     emit ListChanged();
 }

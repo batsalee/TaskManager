@@ -26,7 +26,13 @@ qt_add_executable(TaskManagerApp src/main.cpp
     qml/ButtonList.qml qml/InformationWindow.qml qml/Resizer.qml qml/TaskList.qml qml/TextInputWindow.qml qml/TitleBar.qml
     src/Task.h
     src/FileWriter.h
-    src/FileWriter.cpp)
+    src/FileWriter.cpp
+    src/JsonSerializer.h
+    src/JsonSerializer.cpp
+    src/Date.h
+    src/Date.cpp
+    src/FolderOpener.h
+    src/FolderOpener.cpp)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"
