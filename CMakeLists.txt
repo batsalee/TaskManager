@@ -32,7 +32,13 @@ qt_add_executable(TaskManagerApp src/main.cpp
     src/Date.h
     src/Date.cpp
     src/FolderOpener.h
-    src/FolderOpener.cpp)
+    src/FolderOpener.cpp
+    src/ScheduleFactory.h
+    src/ScheduleFactory.cpp
+    src/TodayScheduleFactory.h
+    src/TodayScheduleFactory.cpp
+    src/AnotherdayScheduleFactory.h
+    src/AnotherdayScheduleFactory.cpp)
 
 qt_add_resources(TaskManagerApp "configuration"
     PREFIX "/"
