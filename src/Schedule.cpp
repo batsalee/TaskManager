@@ -1,42 +1,5 @@
 #include "Schedule.h"
 
-//
-#include "FileWriter.h"
-
-/*
-MakeScheduleList()
-용도 : init, 처음 해당 날짜의 일정파일을 열때 호출
-시퀀스 : FileReader가 파일을 읽어주면 JsonParser가 파싱하고 해당 내용을 MakeScheduleList()가 이중리스트에 담음
-*/
-void Schedule::ConvertJsonToScheduleList(Document& document)
-{
-    if (document.HasMember("Schedule") && document["Schedule"].IsArray()) {
-        const Value& json_array = document["Schedule"];
-
-        for (int i = 0; i < json_array.Size(); i++) {
-            if (json_array[i].IsArray()) {
-                const Value& inner_array = json_array[i];
-
-                QList<Task> inner_list;
-                for (int j = 0; j < inner_array.Size(); j++) {
-                    if (inner_array[j].IsObject()) {
-                        Task task;
-                        if (inner_array[j].HasMember("title") && inner_array[j]["title"].IsString()) {
-                            task.title = inner_array[j]["title"].GetString();
-                        }
-                        if (inner_array[j].HasMember("importance") && inner_array[j]["importance"].IsInt()) {
-                            task.importance = inner_array[j]["importance"].GetInt();
-                        }
-                        inner_list.push_back(task);
-                    }
-                    // 만약 인코딩 문제가 생긴다면 UTF-8 to EUC-KR 코드 여기에 넣기
-                }
-                task_list.push_back(inner_list);
-            }
-        }
-    }
-}
-
 /* task_list -> json 테스트중
 std::string Schedule::ConvertScheduleListToJson() const {
     Document document;
@@ -65,41 +28,6 @@ std::string Schedule::ConvertScheduleListToJson() const {
     return buffer.GetString();
 }
 */
-
-// 소멸시점에 값을 저장하게 만든다면?
-// 종료시점에 이중리스트 -> json변환 및 저장 테스트
-Schedule::~Schedule()
-{
-    Document document;
-    document.SetObject();
-    Document::AllocatorType& allocator = document.GetAllocator();
-
-    Value scheduleArray(kArrayType);
-
-    for (const auto& innerList : task_list) {
-        Value innerArray(kArrayType);
-        for (const auto& task : innerList) {
-            Value taskObject(kObjectType);
-            taskObject.AddMember("title", StringRef(task.title.toUtf8().constData()), allocator);
-            taskObject.AddMember("importance", task.importance, allocator);
-            innerArray.PushBack(taskObject, allocator);
-        }
-        scheduleArray.PushBack(innerArray, allocator);
-    }
-
-    document.AddMember("Schedule", scheduleArray, allocator);
-
-    StringBuffer buffer;
-    PrettyWriter<StringBuffer> writer(buffer);  // PrettyWriter를 사용
-    document.Accept(writer);
-
-
-    std::string json_for_saving = buffer.GetString();
-    FileWriter fw("./Schedule/test2.json");
-    fw.writeFile(json_for_saving);
-}
-
-
 
 
 /*
@@ -131,7 +59,7 @@ updateTask()
 용도 : 사용자가 할일의 내용을 변경하고 싶을때 호출
 시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle에는 하나의 할일(task)가 들어있음, 해당 task의 내용을 변경하고 싶을때 우클릭 후 내용 입력 후 엔터시 변경
 */
-Q_INVOKABLE void Schedule::updateTask(qint32 y, qint32 x, QString updated_task)
+Q_INVOKABLE void Schedule::updateTask(int y, int x, QString updated_task)
 {
     task_list[y][x].title = updated_task;
     emit ListChanged();

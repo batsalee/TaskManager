@@ -4,7 +4,7 @@ import QtQuick.Layouts 6.3
 ListView {
     id: listView
     clip: true
-    model: scheduler.task_list
+    model: schedule.task_list
     boundsBehavior: Flickable.StopAtBounds
 
     property int scroll_height // 스크롤된 상태에서 더블클릭으로 지울때 contentY가 유지되도록 하기 위해
@@ -55,7 +55,7 @@ ListView {
                             // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                             backgroundRect.getxIndex();
                             xIndex = index;
-                            scheduler.deleteTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
+                            schedule.deleteTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
                         }
 
                         onClicked: {
@@ -99,10 +99,10 @@ ListView {
 
     /*
     Connections {
-        target: scheduler
+        target: schedule
 
         function onTasksChanged() { // 할일 삭제 및 변경시 현재 스크롤 상태 유지하면서 값 갱신
-            listView.model = scheduler.getTaskList(); // 화면에 보이는 리스트 갱신
+            listView.model = schedule.getTaskList(); // 화면에 보이는 리스트 갱신
 
             if(listView.model.length * 30 >= mainWindow.height - 30)
                 listView.contentY = listView.scroll_height;
@@ -111,7 +111,7 @@ ListView {
         }
 
         function onTasksInserted() { // 할일 추가시 스크롤 가장 아래로 내리면서 값 추가
-            listView.model = scheduler.getTaskList(); // 화면에 보이는 리스트 갱신
+            listView.model = schedule.getTaskList(); // 화면에 보이는 리스트 갱신
 
             listView.contentY = (listView.model.length * 30) - (mainWindow.height - 30);
         }

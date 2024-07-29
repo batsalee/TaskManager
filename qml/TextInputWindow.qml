@@ -42,12 +42,12 @@ Window {
         2) task중요도를 @와 #을 이용해 구현했기때문에 파싱이 꼬일것을 감안해서 제약을 둠
     */
     function insertTask() {
-        scheduler.insertTask(textInput.text);
+        schedule.insertTask(textInput.text);
         textInputWindow.close();
     }
 
     function updateTask() {
-        scheduler.updateTask(y, x, textInput.text);
+        schedule.updateTask(y, x, textInput.text);
         textInputWindow.close();        
     }
 }

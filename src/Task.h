@@ -7,11 +7,11 @@
 using Task = struct task {
     Q_GADGET
     Q_PROPERTY(QString title MEMBER title)
-    Q_PROPERTY(qint32 importance MEMBER importance)
+    Q_PROPERTY(int importance MEMBER importance)
 
 public:
     QString title;
-    qint32 importance;
+    int importance;
 };
 
 Q_DECLARE_METATYPE(Task)
