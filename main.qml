@@ -25,6 +25,7 @@ Window {
     }
 
     TaskList { // 왼쪽에 표시될 할일들의 리스트 영역
+        id: taskList
         x: 0
         y: 30
         width: parent.width * 0.85
@@ -32,6 +33,7 @@ Window {
     }
 
     ButtonList { // 오른쪽에 표시될 버튼들 영역
+        id: buttonList
         x: parent.width * 0.85
         y: 30
         width: parent.width * 0.15

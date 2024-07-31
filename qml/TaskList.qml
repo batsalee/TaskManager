@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts 6.3
+import QtQuick.Controls
 
 ListView {
     id: listView
@@ -94,8 +95,37 @@ ListView {
                     }
                 }
             }
+
+            Rectangle{
+                id: insertRect
+                width: 25
+                height: 25
+                color: "#FFFFFF"
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        // textinput 불러와서 작성한 내용 파일에 추가되게
+                        var component = Qt.createComponent("TextInputWindow.qml");
+                        if(component.status === Component.Ready) {
+                            var textInsertWindow = component.createObject();
+                            textInsertWindow.state = 0; // 0은 insert, 1은 update
+                            textInsertWindow.show();
+                        }
+                    }
+                }
+            }
+            Connections {
+                target: buttonList
+                onShowInsertRect: { // 버튼을 누르면 이 이벤트가 발생해서 동작수행
+                    insertRect.visible ^= 1;
+                }
+            }
         }
     }
+}
+
+
 
     /*
     Connections {
@@ -117,4 +147,4 @@ ListView {
         }
     }
     */
-}
+
