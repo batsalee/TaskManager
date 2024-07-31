@@ -8,7 +8,7 @@ std::unique_ptr<Schedule> ScheduleFactory::makeSchedule()
     // 2) 파일 열기
     // 이 부분 변경하기(date값 기반으로 파일경로 구성하도록 변경)
     FileReader fr("./Schedule/test.json"); // FileReader 객체 생성
-    std::string&& file_content = fr.readFile(); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
+    std::string file_content = std::move(fr.readFile()); // ★ 여기서 예외처리 나중에 파일 없으면 만드는 기능 추가하기
 
     // 3) 파일 내용 -> json 파싱
     Document document;
