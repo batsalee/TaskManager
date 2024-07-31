@@ -96,6 +96,7 @@ ListView {
                 }
             }
 
+            /* 기능 추가시 해당 부분 주석 제거하고 ButtonList.qml 함수 주석제거
             Rectangle{
                 id: insertRect
                 width: 25
@@ -121,6 +122,7 @@ ListView {
                     insertRect.visible ^= 1;
                 }
             }
+            */
         }
     }
 }

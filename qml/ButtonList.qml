@@ -10,10 +10,12 @@ Column {
         text: qsTr("할일 추가")
 
         onClicked: {
-            showInsertRect(); // 이 버튼을 누르면 showInsertRect 이벤트 발생
+
+            /*기능추가시 해당 함수만 남기고 나머지 지우면 됌*/
+            // showInsertRect(); // 이 버튼을 누르면 showInsertRect 이벤트 발생
 
 
-            /*
+
             // textinput 불러와서 작성한 내용 파일에 추가되게
             var component = Qt.createComponent("TextInputWindow.qml");
             if(component.status === Component.Ready) {
@@ -21,7 +23,7 @@ Column {
                 textInsertWindow.state = 0; // 0은 insert, 1은 update
                 textInsertWindow.show();
             }
-            */
+
         }
     }
 
