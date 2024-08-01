@@ -15,12 +15,16 @@ endif()
 
 # 소스 파일 추가
 file(GLOB_RECURSE SOURCES
+<<<<<<< HEAD
     source/*
+=======
+    "src/*"
+>>>>>>> 84b4325b1758014c3b70cf5e7bd0bdf75b6f7274
 )
 
 # QML 파일 추가
 file(GLOB QML_FILES
-    qml/*
+    "qml/*"
 )
 
 # 실행 파일 생성
