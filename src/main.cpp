@@ -2,15 +2,15 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "app_environment.h"
-#include "import_qml_components_plugins.h"
-#include "import_qml_plugins.h"
+#include "QtPlugin/app_environment.h"
+#include "QtPlugin/import_qml_components_plugins.h"
+#include "QtPlugin/import_qml_plugins.h"
 
 // 내가 추가한 헤더들
 #include <iostream>
-#include "TodayScheduleFactory.h"
-#include "Schedule.h"
-#include "FolderOpener.h"
+#include "ScheduleFactory/TodayScheduleFactory.h"
+#include "Schedule/Schedule.h"
+#include "FolderOpener/FolderOpener.h"
 
 int main(int argc, char *argv[])
 {
