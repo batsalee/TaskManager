@@ -17,7 +17,7 @@ qml과 직접적으로 소통하는 이 프로젝트의 핵심 클래스
 #include <QObject>
 #include <QString>
 #include <QList>
-#include "Task.h"
+#include "../Task/Task.h"
 
 class Schedule : public QObject
 {

@@ -15,7 +15,7 @@ endif()
 
 # 소스 파일 추가
 file(GLOB_RECURSE SOURCES
-    src/*
+    source/*
 )
 
 # QML 파일 추가
