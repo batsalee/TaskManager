@@ -2,7 +2,7 @@
 
 1. 클래스 관계
 Schedule 클래스의 팩토리메서드 패턴 구현부의 팩토리 클래스
-Date 클래스로부터 날짜정보를 받아 해당 날짜의 일정을 구성
+Date, FileReader, JsonParser 클래스를 이용해 일정 목록을 작성
 
 2. 용도
 Schedule 클래스의 팩토리

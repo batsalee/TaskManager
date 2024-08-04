@@ -6,7 +6,7 @@ FileManager클래스에 의해 읽혀진 context를 json으로 파싱
 Schedule 클래스 소멸시 이중리스트를 json으로 파싱 후 FileManager에 의해 저장
 
 2. 용도
-일정 정보를 로컬에 json으로 저장하기 위함
+일정 정보를 로컬에 json으로 저장하고, 저장된 json을 읽어와서 파싱하는 용도
 
 3. 구현방식
 rapidjson 라이브러리를 사용해서 파싱 및 시리얼라이징

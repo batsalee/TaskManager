@@ -27,6 +27,21 @@ std::string Schedule::ConvertScheduleListToJson() const {
 
     return buffer.GetString();
 }
+
+고민
+    폴더나 파일은 저장하는 시점에 만들어도 된다.
+    생성시점에는 오히려 필요한 일정들을 task_list에 넣기만 하면 된다.
+    그러니 나중에 종료 로직 만들때 폴더 및 파일 만드는 로직 작성하기
+
+     // 폴더 없으면 만들기
+    if (!std::filesystem::exists(fr.getFolderPath()))
+        std::filesystem::create_directories(fr.getFolderPath());
+
+    // 파일 없으면 만들기
+    if (!std::filesystem::exists(fr.getFilePath())) {
+        // json통해서 파일내용 만들기
+        // 만들어진 내용 로컬에 저장하기
+    }
 */
 
 

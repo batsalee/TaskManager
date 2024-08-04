@@ -9,7 +9,7 @@ Schedule객체가 소멸할때 이중리스트의 내용을 JsonSerializer가 json으로 변경하고
 FileWriter가 해당 json 내용을 로컬에 File로 저장
 
 3. 구현방식
-FileManager.h의 virtual writeFile()의 구현부
+FileManager 상속받고 쓰기 관련된 부분만 FileWriter에 구현
 */
 
 #pragma once

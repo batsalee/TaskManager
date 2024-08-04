@@ -1,21 +1,17 @@
 #include "JsonParser.h"
 
-// 파일 내용 -> json 파싱
+/* jsonToTaskList()
+용도 : json파일을 파싱해서 이중리스트로 변환
+시퀀스 : FileManager에 의해 읽혀진 파일의 내용을 jsonParser가 파싱하고, 그 결과를 Schedule객체의 task_list멤버변수에 보관
+*/
 void JsonParser::jsonToTaskList(Schedule* schedule, std::string file_content)
 {
     Document document;
-    try {
-        // 파싱 오류 발생시 예외 throw
-        if (document.Parse(file_content.c_str()).HasParseError()) {
-            std::string error_log = GetParseError_En(document.GetParseError());
-            int error_offset = document.GetErrorOffset();
+    if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
+        std::string error_log = GetParseError_En(document.GetParseError());
+        int error_offset = document.GetErrorOffset();
 
-            throw std::runtime_error(error_log + " (" + std::to_string(error_offset) + ")\n");
-        }
-    }
-    catch(const std::runtime_error& re) {
-        std::cerr << re.what() << '\n';
-        return;
+        throw std::runtime_error(error_log + " (" + std::to_string(error_offset) + ")\n");
     }
 
     // json -> 이중리스트 변환 후 schedule객체의 task_list에 덧붙이기

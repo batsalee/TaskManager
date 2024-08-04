@@ -11,7 +11,7 @@ Date& Date::instance()
 }
 
 /* currentDate()
-용도 : 오늘의 날짜(년, 월, 일) 획득
+용도 : 오늘의 날짜(년, 월, 일, 요일) 획득
 시퀀스 : 프로그램 최초 실행시 오늘의 Schedule을 보여주기 위해 오늘 날짜 획득 후 ScheduleFactory에 제공
 */
 void Date::currentDate()
