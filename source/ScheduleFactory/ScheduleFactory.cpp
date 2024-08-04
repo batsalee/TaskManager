@@ -1,5 +1,14 @@
 #include "ScheduleFactory.h"
 
+/* makeSchedule()
+용도 : ScheduleFactory에 의한 Schedule 객체 생성함수
+시퀀스 :
+    1) 날짜정보 획득
+    2) 해당 날짜의 일정파일 열기
+    3) 일정 파일(json 형식)을 파싱
+    4) Schedule 객체를 만들어서 Schedule 객체의 멤버변수인 task_list에 일정내용 입력
+    5) Schedule 객체 반환
+*/
 std::unique_ptr<Schedule> ScheduleFactory::makeSchedule()
 {
     // 1) 날짜 획득

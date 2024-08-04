@@ -30,8 +30,7 @@ std::string Schedule::ConvertScheduleListToJson() const {
 */
 
 
-/*
-GetScheduleList()
+/* GetScheduleList()
 용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
 시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음
 */
@@ -40,12 +39,11 @@ QList<QList<Task>> Schedule::GetScheduleList()
     return task_list;
 }
 
-/*
-insertTask()
+/* insertTask()
 용도 : 사용자가 사용중 할일이 새로 생겨서 추가하고 싶을때 호출
 시퀀스 : QML에서 Button 누른 후 뜨는 TextInputWindow에 내용을 입력하고 엔터를 치면 해당 내용이 ListView의 최상단에 추가됨
-기능 고민 : version 1.0에서 #으로 여러개 입력시 분리하게 했었는데 이거때문에 C#같은 단어를 쓰지를 못했었음
-          그래서 해당 기능을 유지할지 삭제할지에 대한 고민 후 해당 기능은 추후에 GUI에서 추가 가능하도록 구현하는게 맞다고 판단해서 우선 삭제
+고민 : version 1.0에서 #으로 여러개 입력시 분리하게 했었는데 이거때문에 C#같은 단어를 쓰지를 못했었음
+      그래서 해당 기능을 유지할지 삭제할지에 대한 고민 후 해당 기능은 추후에 GUI에서 추가 가능하도록 구현하는게 맞다고 판단해서 우선 삭제
 */
 Q_INVOKABLE void Schedule::insertTask(QString inserted_task)
 {
@@ -54,10 +52,10 @@ Q_INVOKABLE void Schedule::insertTask(QString inserted_task)
     emit ListChanged();
 }
 
-/*
-updateTask()
+/* updateTask()
 용도 : 사용자가 할일의 내용을 변경하고 싶을때 호출
-시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle에는 하나의 할일(task)가 들어있음, 해당 task의 내용을 변경하고 싶을때 우클릭 후 내용 입력 후 엔터시 변경
+시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle에는 하나의 할일(task)가 들어있음
+        해당 task의 내용을 변경하고 싶을때 우클릭 후 내용 입력 후 엔터시 변경
 */
 Q_INVOKABLE void Schedule::updateTask(int y, int x, QString updated_task)
 {
@@ -65,10 +63,10 @@ Q_INVOKABLE void Schedule::updateTask(int y, int x, QString updated_task)
     emit ListChanged();
 }
 
-/*
-deleteTask()
+/* deleteTask()
 용도 : 사용자가 할일의 내용을 완료해서 목록에서 지우고 싶을때 호출
-시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle 중 사용자가 완료한 task를 더블클릭하면 이 함수가 호출되어 해당 내용이 task_list에서 지워짐
+시퀀스 : QML에서 ListView에 나타나있는 여러개의 Rectangle 중
+        사용자가 완료한 task를 더블클릭하면 이 함수가 호출되어 해당 내용이 task_list에서 지워짐
 */
 Q_INVOKABLE void Schedule::deleteTask(int y, int x)
 {
