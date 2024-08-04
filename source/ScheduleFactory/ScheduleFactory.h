@@ -20,13 +20,12 @@ Schedule 클래스의 팩토리
 #include "../Schedule/Schedule.h"
 #include "../Date/Date.h"
 #include "../FileManager/FileReader.h"
-#include "../JsonManager/JsonManager.h"
-using namespace rapidjson;
+#include "../JsonManager/JsonParser.h"
 
 class ScheduleFactory
 {
 public:
-    std::unique_ptr<Schedule> makeSchedule();
+    std::unique_ptr<Schedule> makeSchedule(); // 팩토리 메서드 패턴의 생성함수
     virtual Date& getDate() = 0;
 
     virtual ~ScheduleFactory() {};

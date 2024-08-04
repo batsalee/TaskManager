@@ -19,8 +19,5 @@ FileManager.h의 virtual writeFile()의 구현부
 class FileWriter : public FileManager
 {
 public:
-    FileWriter() = default;
-    FileWriter(std::string path) { file_path = path; }
-
     void writeFile(std::string&);
 };

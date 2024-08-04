@@ -25,9 +25,10 @@ private:
     int year;
     int month;
     int day;
+    int day_of_week;
 
     Date() = default;
-    ~Date() = default;
+    virtual ~Date() = default;
 
     // 싱글턴 구현 위해 복사, 이동, 대입 delete
     Date(const Date& d) = delete;
@@ -36,5 +37,14 @@ private:
 
 public:
     static Date& instance(); // 싱글턴 객체 획득 함수
-    void getTodayDate(); // 오늘 날짜 획득 함수
+    void currentDate(); // 오늘 날짜 획득 함수
+
+    // setter
+    // Q_INVOKABLE void setDate(); // 나중에 qml측에서 날짜 변경기능 만들때 사용할 예정
+
+    // getter
+    int getYear();
+    int getMonth();
+    int getDay();
+    int getDayOfWeek();
 };

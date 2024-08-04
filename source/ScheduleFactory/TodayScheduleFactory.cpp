@@ -8,6 +8,6 @@
 Date& TodayScheduleFactory::getDate()
 {
     Date& date = Date::instance();
-    date.getTodayDate();
+    date.currentDate();
     return date;
 }

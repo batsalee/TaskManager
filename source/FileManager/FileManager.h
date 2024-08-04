@@ -17,13 +17,29 @@ Visitor 패턴을 구현해서 호출되어야 하므로 마찬가지로 virtual로 구현 후 호출
 #pragma once
 
 #include <string>
+#include <filesystem>
 #include <fstream>
+#include "../Date/Date.h"
 
 class FileManager
 {
 protected:
+    std::string folder_path; // 폴더의 경로
     std::string file_path; // 파일의 경로
+    // 둘을 다 기록하는 이유는 폴더는 filesystem에 의해 관리받고, 파일은 fstream에 의해 관리받게 하기 위해
 
 public:
+    // 관리중인 날짜(Date)에 해당하는 일정파일의 경로 설정
+    void setFolderPath(Date& date);
+    void setFilePath(Date& date);
+
+    // 폴더 및 파일의 존재유무 파악을 위한 getter
+    std::string getFolderPath();
+    std::string getFilePath();
+
+    void setPath(Date& date);
+    void setPath(std::string path);
+
+    FileManager() = default;
     virtual ~FileManager() {};
 };

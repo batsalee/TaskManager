@@ -18,8 +18,5 @@ FileManager.h의 virtual readFrile()의 구현부
 class FileReader : public FileManager
 {
 public:
-    FileReader() = default;
-    FileReader(std::string path) { file_path = path; }
-
     std::string readFile();
 };
