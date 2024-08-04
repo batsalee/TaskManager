@@ -29,11 +29,12 @@ private:
     Date() = default;
     ~Date() = default;
 
+    // ½Ì±ÛÅÏ ±¸Çö À§ÇØ º¹»ç, ÀÌµ¿, ´ëÀÔ delete
     Date(const Date& d) = delete;
     Date(Date&& d) = delete;
     Date& operator=(const Date & d) = delete;
 
 public:
-    static Date& instance();
-    void getTodayDate();
+    static Date& instance(); // ½Ì±ÛÅÏ °´Ã¼ È¹µæ ÇÔ¼ö
+    void getTodayDate(); // ¿À´Ã ³¯Â¥ È¹µæ ÇÔ¼ö
 };

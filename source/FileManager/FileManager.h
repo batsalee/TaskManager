@@ -22,7 +22,7 @@ Visitor 패턴을 구현해서 호출되어야 하므로 마찬가지로 virtual로 구현 후 호출
 class FileManager
 {
 protected:
-    std::string file_path;
+    std::string file_path; // 파일의 경로
 
 public:
     virtual ~FileManager() {};
