@@ -29,7 +29,7 @@ public:
 
     // »ý¼ºÀÚ
     Schedule() = default;
-    ~Schedule() = default;
+    ~Schedule();
 
     // exit
  //   std::string ConvertScheduleListToJson() const;

@@ -19,5 +19,6 @@ FileManager 상속받고 쓰기 관련된 부분만 FileWriter에 구현
 class FileWriter : public FileManager
 {
 public:
-    void writeFile(std::string&);
+    FileWriter();
+    void writeFile(std::string& context);
 };

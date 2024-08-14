@@ -1,49 +1,8 @@
 #include "Schedule.h"
 
-/* task_list -> json 테스트중
-std::string Schedule::ConvertScheduleListToJson() const {
-    Document document;
-    document.SetObject();
-    Document::AllocatorType& allocator = document.GetAllocator();
-
-    Value scheduleArray(kArrayType);
-
-    for (const auto& innerList : task_list) {
-        Value innerArray(kArrayType);
-        for (const auto& task : innerList) {
-            Value taskObject(kObjectType);
-            taskObject.AddMember("title", StringRef(task.title.toUtf8().constData()), allocator);
-            taskObject.AddMember("importance", task.importance, allocator);
-            innerArray.PushBack(taskObject, allocator);
-        }
-        scheduleArray.PushBack(innerArray, allocator);
-    }
-
-    document.AddMember("Schedule", scheduleArray, allocator);
-
-    StringBuffer buffer;
-    PrettyWriter<StringBuffer> writer(buffer);  // PrettyWriter를 사용
-    document.Accept(writer);
-
-    return buffer.GetString();
-}
-
-고민
-    폴더나 파일은 저장하는 시점에 만들어도 된다.
-    생성시점에는 오히려 필요한 일정들을 task_list에 넣기만 하면 된다.
-    그러니 나중에 종료 로직 만들때 폴더 및 파일 만드는 로직 작성하기
-
-     // 폴더 없으면 만들기
-    if (!std::filesystem::exists(fr.getFolderPath()))
-        std::filesystem::create_directories(fr.getFolderPath());
-
-    // 파일 없으면 만들기
-    if (!std::filesystem::exists(fr.getFilePath())) {
-        // json통해서 파일내용 만들기
-        // 만들어진 내용 로컬에 저장하기
-    }
-*/
-
+// 종료시 저장로직 테스트중
+#include "../JsonManager/JsonSerializer.h"
+#include "../FileManager/FileWriter.h"
 
 /* GetScheduleList()
 용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
@@ -89,4 +48,16 @@ Q_INVOKABLE void Schedule::deleteTask(int y, int x)
     if(task_list[y].empty()) task_list.removeAt(y);
 
     emit ListChanged();
+}
+
+/*
+종료시 저장하는 로직 테스트중
+*/
+Schedule::~Schedule()
+{
+    JsonSerializer js;
+    std::string _json = js.taskListToJson(task_list);
+
+    FileWriter fw;
+    fw.writeFile(_json);
 }

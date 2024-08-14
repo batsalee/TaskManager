@@ -17,5 +17,6 @@ rapidjson 라이브러리 활용
 
 class JsonSerializer : public JsonManager
 {
-
+public:
+    std::string taskListToJson(QList<QList<Task>>& task_list);
 };

@@ -24,20 +24,27 @@ std::unique_ptr<Schedule> ScheduleFactory::makeSchedule()
     JsonParser json_parser; // 파일 내용은 json형태이므로 파싱담당 객체 생성
 
     try {
-        // 4) 해당 날짜의 일정파일 확인, 있다면 task_list에 추가
+        // 이미 오늘 파일을 만들었다면 그대로 읽어오기
+        // 오늘 처음 실행하는거라면 task_list에 파일의 내용 추가
         file_reader.setPath(date);
-        if (std::filesystem::exists(file_reader.getFilePath())) {
+        if (std::filesystem::exists(file_reader.getFilePath()) && json_parser.isOpened(file_reader.readFile())) {
             json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
         }
+        else {
+            // 4) 해당 날짜의 일정파일 확인, 있다면 task_list에 추가
+            if (std::filesystem::exists(file_reader.getFilePath())) {
+                json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
+            }
 
-        // 5) 매일 할일 파일 확인, task_list에 추가
-        file_reader.setPath("everyday");
-        json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
+            // 5) 매일 할일 파일 확인, task_list에 추가
+            file_reader.setPath("everyday");
+            json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
 
-        // 6) 해당 요일에 할일 확인, task_list에 추가
-        std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
-        file_reader.setPath(days[date.getDayOfWeek()]);
-        json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
+            // 6) 해당 요일에 할일 확인, task_list에 추가
+            std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+            file_reader.setPath(days[date.getDayOfWeek()]);
+            json_parser.jsonToTaskList(schedule.get(), file_reader.readFile());
+        }
     }
     catch(const std::runtime_error& re) {
         std::cerr << re.what() << '\n';
