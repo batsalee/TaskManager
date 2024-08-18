@@ -3,8 +3,8 @@
 Document JsonParser::parse(std::string file_content)
 {
     Document document;
-
-    if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
+    if(file_content.empty()) document.Parse("{}"); // 일정파일이 비어있는 경우 오류발생 방지를 위해 {} 삽입
+    else if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
         std::string error_log = GetParseError_En(document.GetParseError());
         int error_offset = document.GetErrorOffset();
 
@@ -19,7 +19,7 @@ Document JsonParser::parse(std::string file_content)
 시퀀스 : FileManager에 의해 읽혀진 파일의 내용을 jsonParser가 파싱하고, 그 결과를 Schedule객체의 task_list멤버변수에 보관
 고민 : 파일 열때 opened : false거나 opened가 없다면 어제자 내용을 가져와야함, 있다면 그대로 읽으면 됨
 */
-void JsonParser::jsonToTaskList(std::string file_content)
+void JsonParser::jsonToTaskList(std::string file_content, bool isRemaining)
 {
     Document document = parse(file_content.c_str());
 
@@ -41,6 +41,14 @@ void JsonParser::jsonToTaskList(std::string file_content)
                         }
                         if (inner_array[j].HasMember("importance") && inner_array[j]["importance"].IsInt()) {
                             task.importance = inner_array[j]["importance"].GetInt();
+                            if(isRemaining && task.importance != 1) {
+                                task.importance = 2;
+                                /* 이 if문 한줄에 대한 고민
+                                남겨진 일정에 대한 관리인 경우 중요도 변경이 필요하므로 해당 경우에만 조정하도록 하는 코드인데
+                                이걸 위해 isRemaining 매개변수도 추가해야하고 default값도 사용하는 모양이 이뻐보이지 않음.
+                                다른 해결방법이 있을지 고민해보기
+                                */
+                            }
                         }
                         inner_list.push_back(task);
                     }

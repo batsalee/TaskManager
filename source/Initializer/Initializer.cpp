@@ -1,14 +1,5 @@
 #include "Initializer.h"
 
-// -1) initializer
-/*
-        1) "./Data/init.json" 열기
-        2) 위 내용 파싱
-        3)     "is_first_time": false, "last_managed_date_year": 2024,"last_managed_date_month": 8,"last_managed_date_day": 18
-        위 변수들 정보 얻기
-        4) 만약 날짜가 다르면 makeSchedule, 날짜가 같다면 그냥 읽어와서 파싱
-    */
-
 Initializer::Initializer()
 {
     FileReader file_reader;
@@ -45,14 +36,41 @@ void Initializer::Init()
         json_parser.jsonToTaskList(file_reader.readFile());
     }
     else { // 오늘 처음 실행하는 것이라면 오늘의 task_list 만들기
-        schedule.makeTaskList(); // 고민 이거 내용 여기다 그냥 해도 되는거 아닌가? 왜 스케쥴 안에 적엇지?
-                                // 그냥 여기다 하면 이전날짜 정보도 여기서 추가하면 되는데 훨씬 쉬워질듯 함
+        // 1) 오늘 날짜에 사전에 추가한 일정이 있다면 반영
+        if (std::filesystem::exists(file_reader.getFilePath())) json_parser.jsonToTaskList(file_reader.readFile());
 
+        // 2) 매일 할일로 설정된 내용이 있다면 반영
+        file_reader.setPath("./Data/fixed_schedule/everyday.json");
+        json_parser.jsonToTaskList(file_reader.readFile());
+
+        // 3) 오늘 요일에 할일로 설정된 내용이 있다면 반영
+        std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+        file_reader.setPath("./Data/fixed_schedule/" + days[date.getDayOfWeek()] + ".json");
+        json_parser.jsonToTaskList(file_reader.readFile());
+
+        // 4) 지난날 안하고 남겨둔 일이 있다면 반영
+        std::string year_of_remaining_schedule = std::to_string(last_managed_date_year);
+        std::string month_of_remaining_schedule = (last_managed_date_month < 10) ? '0' + std::to_string(last_managed_date_month) : std::to_string(last_managed_date_month);
+        std::string day_of_remaining_schedule = (last_managed_date_day < 10) ? '0' + std::to_string(last_managed_date_day) : std::to_string(last_managed_date_day);
+        std::string remaining_file_path = "./Data/" + year_of_remaining_schedule + "/" + month_of_remaining_schedule + "/" + day_of_remaining_schedule + ".json";
+        if (std::filesystem::exists(remaining_file_path)) {
+            file_reader.setPath(remaining_file_path);
+            json_parser.jsonToTaskList(file_reader.readFile(), true);
+        }
+
+        // 5) init.json에 최근 관리일자 오늘로 변경
         JsonSerializer json_serializer;
         std::string context = json_serializer.initializerToJson(date.getYear(), date.getMonth(), date.getDay());
 
         FileWriter file_writer;
         file_writer.setPath("./Data/init.json");
+        file_writer.writeFile(context);
+
+        // 6) 오늘의 일정파일 즉시 반영
+        // 이 부분은 어차피 프로그램 종료시 저장하면서 반영되지만 프로그램 비정상 종료에 대한 대응이 필요하다는 피드백에 따라 추가
+        // 또한 추후 추가될 날짜 변경 기능에 대해 다른 날짜에서 오늘 날짜로 돌아올때 고정일정에 대한 추가 로직을 반영할 필요가 없어지는 효과도 있음
+        context = json_serializer.taskListToJson(schedule.task_list);
+        file_writer.setPath(date);
         file_writer.writeFile(context);
     }
 }

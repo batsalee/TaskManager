@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     Schedule& schedule = Schedule::instance(); // 객체만 생성되어있고 task_list는 비어있음
 
     // 4) Date와 Schedule간의 signal - slot 연결
-    QObject::connect(&date, &Date::dateChanged, &schedule, &Schedule::makeTaskList);
+    QObject::connect(&date, &Date::dateChanged, &schedule, &Schedule::showTaskList);
     // 이제부턴 날짜가 변경되면 그 날짜의 스케쥴이 만들어짐
 
     // 5) FolderOpener 객체 생성

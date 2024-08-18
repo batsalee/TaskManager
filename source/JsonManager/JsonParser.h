@@ -21,5 +21,5 @@ class JsonParser : public JsonManager
 public:
     Document parse(std::string file_content);
     bool isOpened(std::string file_content);
-    void jsonToTaskList(std::string file_content);
+    void jsonToTaskList(std::string file_content, bool isRemaining = false);
 };

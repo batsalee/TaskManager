@@ -10,23 +10,21 @@ Schedule& Schedule::instance()
     return instance;
 }
 
-void Schedule::makeTaskList()
+void Schedule::showTaskList()
 {
+    /* 추후 기능 확장시 사용 예정
+    이 함수는 task_list를 실제로 만드는 용도가 아니라 다른 날짜의 일정을 관리할때
+    단지 그날에 등록된 일정만 보여주는 용도이므로 별도 내용 추가 없이 해당 날짜의 내용만 표현함
+    */
+
     FileReader file_reader; // 부모클랙스인 FileManager의 생성자에 의해 오늘 날짜 기반 경로 설정
     JsonParser json_parser; // 파일 내용은 json형태이므로 파싱담당 객체 생성
-
     Date& date = Date::instance();
 
+    task_list.clear();
     if (std::filesystem::exists(file_reader.getFilePath())) { // 오늘 별도로 추가된 일정이 있다면 task_list에 추가
         json_parser.jsonToTaskList(file_reader.readFile());
     }
-
-    file_reader.setPath("./Data/fixed_schedule/everyday.json"); // 매일 할일 파일을 읽어온 후 task_list에 추가
-    json_parser.jsonToTaskList(file_reader.readFile());
-
-    std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
-    file_reader.setPath("./Data/fixed_schedule/" + days[date.getDayOfWeek()] + ".json"); // 해당 요일에 할일 파일을 읽어온 후 task_list에 추가
-    json_parser.jsonToTaskList(file_reader.readFile());
 }
 
 /* GetScheduleList()

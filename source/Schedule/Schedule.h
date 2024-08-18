@@ -52,5 +52,5 @@ signals:
     void ListChanged();
 
 public slots:
-    void makeTaskList();
+    void showTaskList();
 };
