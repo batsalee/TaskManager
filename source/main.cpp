@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
     initializer->Init();
     initializer.reset(); // 초기 설정시 외에 필요없으므로 리소스 관리를 위해 할당해제
 
-    // 2) 날짜 정보를 관리하는 Date 객체 생성
     Date& date = Date::instance(); // 생성자에 의해 오늘 날짜로 정보 설정
     // 이땐 아직 Date와 Schedule의 signal-slot이 설정되어있지 않으므로 schedule은 make되지 않음
 

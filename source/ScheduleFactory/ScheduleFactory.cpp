@@ -28,7 +28,7 @@ void ScheduleFactory::makeSchedule()
         // 이미 오늘 파일을 만들었다면 그대로 읽어오기
         // 오늘 처음 실행하는거라면 task_list에 파일의 내용 추가
         file_reader.setPath(date);
-        if (std::filesystem::exists(file_reader.getFilePath()) && json_parser.isOpened(file_reader.readFile())) {
+        if (std::filesystem::exists(file_reader.getFilePath())) {
             json_parser.jsonToTaskList(file_reader.readFile());
         }
         else {

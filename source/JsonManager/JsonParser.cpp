@@ -3,6 +3,7 @@
 Document JsonParser::parse(std::string file_content)
 {
     Document document;
+
     if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
         std::string error_log = GetParseError_En(document.GetParseError());
         int error_offset = document.GetErrorOffset();
