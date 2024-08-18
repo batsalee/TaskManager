@@ -25,7 +25,7 @@ Schedule 클래스의 팩토리
 class ScheduleFactory
 {
 public:
-    std::unique_ptr<Schedule> makeSchedule(); // 팩토리 메서드 패턴의 생성함수
+    void makeSchedule(); // 팩토리 메서드 패턴의 생성함수
     virtual Date& getDate() = 0;
 
     virtual ~ScheduleFactory() {};

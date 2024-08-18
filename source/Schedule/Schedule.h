@@ -24,23 +24,26 @@ class Schedule : public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QList<Task>> task_list READ GetScheduleList NOTIFY ListChanged)
 
-public:
-    QList<QList<Task>> task_list;
-
+private:
     // 생성자
     Schedule() = default;
     ~Schedule();
 
-    // exit
- //   std::string ConvertScheduleListToJson() const;
+    // 싱글턴 구현 위해 복사, 이동, 대입 delete
+    Schedule(const Schedule& d) = delete;
+    Schedule(Schedule&& d) = delete;
+    Schedule& operator=(const Schedule & d) = delete;
 
-    // getter
-    QList<QList<Task>> GetScheduleList();
+public:
+    QList<QList<Task>> task_list; // 이 클래스와 프로그램의 핵심인 이중리스트
+    QList<QList<Task>> GetScheduleList(); // getter
 
     // setter
     Q_INVOKABLE void insertTask(QString);
     Q_INVOKABLE void updateTask(int, int, QString);
     Q_INVOKABLE void deleteTask(int, int);
+
+    static Schedule& instance(); // 싱글턴 객체 획득 함수
 
 signals:
     void ListChanged();

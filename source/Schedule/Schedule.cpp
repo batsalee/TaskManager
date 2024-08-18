@@ -4,6 +4,12 @@
 #include "../JsonManager/JsonSerializer.h"
 #include "../FileManager/FileWriter.h"
 
+Schedule& Schedule::instance()
+{
+    static Schedule instance;
+    return instance;
+}
+
 /* GetScheduleList()
 용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
 시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음

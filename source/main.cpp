@@ -28,11 +28,12 @@ int main(int argc, char *argv[])
 
     // 1) Schedule객체 팩토리메서드 통해서 생성
     TodayScheduleFactory tsf;
-    std::unique_ptr<Schedule> schedule = tsf.makeSchedule();
+    tsf.makeSchedule();
+    Schedule& schedule = Schedule::instance();
 
     // qml과 C++ integration
     qRegisterMetaType<Task>("Task"); // Task 구조체 QML에 등록
-    engine.rootContext()->setContextProperty("schedule", schedule.get()); // unique_ptr의 주소를 복사할 수 없어서 get()으로 schedule의 주소 넘김
+    engine.rootContext()->setContextProperty("schedule", &schedule); // unique_ptr의 주소를 복사할 수 없어서 get()으로 schedule의 주소 넘김
     engine.rootContext()->setContextProperty("folder_opener", &folder_opener);
 
     // 내 코드 끝
