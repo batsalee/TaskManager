@@ -45,7 +45,15 @@ void Initializer::Init()
         json_parser.jsonToTaskList(file_reader.readFile());
     }
     else { // 오늘 처음 실행하는 것이라면 오늘의 task_list 만들기
-        schedule.makeTaskList();
+        schedule.makeTaskList(); // 고민 이거 내용 여기다 그냥 해도 되는거 아닌가? 왜 스케쥴 안에 적엇지?
+                                // 그냥 여기다 하면 이전날짜 정보도 여기서 추가하면 되는데 훨씬 쉬워질듯 함
+
+        JsonSerializer json_serializer;
+        std::string context = json_serializer.initializerToJson(date.getYear(), date.getMonth(), date.getDay());
+
+        FileWriter file_writer;
+        file_writer.setPath("./Data/init.json");
+        file_writer.writeFile(context);
     }
 }
 

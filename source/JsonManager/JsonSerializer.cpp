@@ -1,5 +1,23 @@
 #include "JsonSerializer.h"
 
+std::string JsonSerializer::initializerToJson(int y, int m, int d)
+{
+    Document document;
+    document.SetObject();
+    Document::AllocatorType& allocator = document.GetAllocator();
+
+    document.AddMember("tutorial", false, allocator);
+    document.AddMember("last_managed_date_year", y, allocator);
+    document.AddMember("last_managed_date_month", m, allocator);
+    document.AddMember("last_managed_date_day", d, allocator);
+
+    StringBuffer buffer;
+    PrettyWriter<StringBuffer> writer(buffer);
+    document.Accept(writer);
+
+    return buffer.GetString();
+}
+
 std::string JsonSerializer::taskListToJson(QList<QList<Task>>& task_list)
 {
     Document document;

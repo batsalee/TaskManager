@@ -10,7 +10,9 @@
 #pragma once
 
 #include "../FileManager/FileReader.h"
+#include "../FileManager/FileWriter.h"
 #include "../JsonManager/JsonParser.h"
+#include "../JsonManager/JsonSerializer.h"
 #include "../Tutorial/Tutorial.h"
 
 class Initializer
