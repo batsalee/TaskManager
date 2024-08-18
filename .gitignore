@@ -1,5 +1,4 @@
 # build/ 폴더 내용은 Data/ 폴더 제외 다 깃에 올리지 않음
-build/
-!build/**/
-!build/**/Data/
+!build/
+build/**
 !build/**/Data/**
