@@ -1,5 +1,10 @@
 #include "FileManager.h"
 
+FileManager::FileManager()
+{
+    setPath(Date::instance()); // 현재 관리중인 날짜로 경로 설정
+}
+
 /* setPath(Date& date)
 용도 : 관리중인 일정파일의 경로 지정, 입력 매개변수가 date(날짜정보)인 경우 파싱 후 지정
 시퀀스 : Date객체의 년/월/일을 기반으로 파일이 저장될 폴더구조와 파일명을 지정
@@ -31,3 +36,4 @@ void FileManager::setPath(std::string file_name)
 */
 std::string FileManager::getFolderPath() { return folder_path; }
 std::string FileManager::getFilePath() { return file_path; }
+

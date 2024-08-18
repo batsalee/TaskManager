@@ -47,4 +47,7 @@ public:
 
 signals:
     void ListChanged();
+
+public slots:
+    void makeTaskList();
 };

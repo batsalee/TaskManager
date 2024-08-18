@@ -8,9 +8,11 @@
 
 // 내가 추가한 헤더들
 #include <iostream>
+#include "Initializer/Initializer.h"
 #include "ScheduleFactory/TodayScheduleFactory.h"
 #include "Schedule/Schedule.h"
 #include "FolderOpener/FolderOpener.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -23,13 +25,29 @@ int main(int argc, char *argv[])
 
     // 내 코드 시작
 
+
     // 0) 사전준비
     FolderOpener folder_opener;
 
-    // 1) Schedule객체 팩토리메서드 통해서 생성
+    // 1) Schedule객체 선언
     TodayScheduleFactory tsf;
     tsf.makeSchedule();
     Schedule& schedule = Schedule::instance();
+
+    // -2) Date 객체 생성 및 오늘 날짜 획득
+    Date& date = Date::instance();
+    // date.setToCurrentDate(); // 원래는 사용했지만 실수방지를 위해 생성자에 넣어버리기로 했음
+
+    // Date와 Schedule간의 signal - slot
+    QObject::connect(&date, &Date::dateChanged, &schedule, &Schedule::makeTaskList);
+
+    // -1) initializer
+    Initializer initializer;
+    //if(initializer.isTutorialNeeded()) tutorial(); // 만약 첫 실행이라면 튜토리얼, 추후 기능추가때 구현
+
+    //if(initializer.isOpenedToday()) schedule.justParse;
+    //else schedule.makeSchedule();
+
 
     // qml과 C++ integration
     qRegisterMetaType<Task>("Task"); // Task 구조체 QML에 등록

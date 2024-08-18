@@ -1,9 +1,11 @@
 #include "FileWriter.h"
 
-// »ý¼ºÀÚ
-FileWriter::FileWriter()
+std::ofstream FileWriter::getOfstream()
 {
-    this->setPath(Date::instance());
+    std::ofstream ofs(file_path);
+    if(!ofs) throw std::runtime_error("Failed to open file.");
+
+    return ofs;
 }
 
 /* writeFile()

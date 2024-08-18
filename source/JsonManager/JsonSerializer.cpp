@@ -21,7 +21,6 @@ std::string JsonSerializer::taskListToJson(QList<QList<Task>>& task_list)
     }
 
     document.AddMember("Schedule", schedule, allocator);
-    document.AddMember("opened", true, allocator);
 
     StringBuffer buffer;
     PrettyWriter<StringBuffer> writer(buffer);

@@ -18,6 +18,7 @@ rapidjson 라이브러리 활용
 class JsonParser : public JsonManager
 {
 public:
+    Document parse(std::string file_content);
     bool isOpened(std::string file_content);
     void jsonToTaskList(std::string file_content);
 };

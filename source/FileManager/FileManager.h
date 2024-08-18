@@ -28,7 +28,7 @@ protected:
     // folder는 filesystem에 의해 관리받고, file은 fstream에 의해 관리받게 하기 위해 따로 기록
 
 public:
-    FileManager() = default;
+    FileManager();
     virtual ~FileManager() {};
 
     // setter 오버로딩
@@ -38,5 +38,4 @@ public:
     // getter
     std::string getFolderPath(); // 일정파일이 위치할 폴더의 존재유무 파악을 위해 사용
     std::string getFilePath(); // 일정파일의 존재유무 파악을 위해 사용
-
 };

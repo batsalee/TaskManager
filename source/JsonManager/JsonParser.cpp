@@ -1,6 +1,6 @@
 #include "JsonParser.h"
 
-bool JsonParser::isOpened(std::string file_content)
+Document JsonParser::parse(std::string file_content)
 {
     Document document;
     if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
@@ -10,7 +10,7 @@ bool JsonParser::isOpened(std::string file_content)
         throw std::runtime_error(error_log + " (" + std::to_string(error_offset) + ")\n");
     }
 
-    return (document.HasMember("opened") && document["opened"].IsBool() && document["opened"].GetBool() == true);
+    return document;
 }
 
 /* jsonToTaskList()
@@ -20,13 +20,7 @@ bool JsonParser::isOpened(std::string file_content)
 */
 void JsonParser::jsonToTaskList(std::string file_content)
 {
-    Document document;
-    if (document.Parse(file_content.c_str()).HasParseError()) { // 파싱 오류 발생시 예외 throw
-        std::string error_log = GetParseError_En(document.GetParseError());
-        int error_offset = document.GetErrorOffset();
-
-        throw std::runtime_error(error_log + " (" + std::to_string(error_offset) + ")\n");
-    }
+    Document document = parse(file_content.c_str());
 
     // json -> 이중리스트 변환 후 schedule객체의 task_list에 덧붙이기
     Schedule& schedule = Schedule::instance();

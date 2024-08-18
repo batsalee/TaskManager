@@ -18,5 +18,6 @@ FileManager 상속받고 읽기 관련된 부분만 FileReader에 구현
 class FileReader : public FileManager
 {
 public:
+    std::ifstream getIfstream();
     std::string readFile();
 };

@@ -17,17 +17,20 @@ Schedule 클래스에 날짜정보 제공
 
 #pragma once
 
+#include <QObject>
 #include <QDate>
 
-class Date
+class Date : public QObject
 {
+    Q_OBJECT
+
 private:
     int year;
     int month;
     int day;
     int day_of_week; // 요일별 할일 기능을 사용하기 위해 오늘이 무슨 요일인지 알아야 함
 
-    Date() = default;
+    Date();
     virtual ~Date() = default;
 
     // 싱글턴 구현 위해 복사, 이동, 대입 delete
@@ -37,14 +40,18 @@ private:
 
 public:
     static Date& instance(); // 싱글턴 객체 획득 함수
-    void currentDate(); // 오늘 날짜 획득 함수
 
     // setter
-    // Q_INVOKABLE void setDate(); // 나중에 qml측에서 날짜 변경기능 만들때 사용할 예정
+    void setDate(QDate q_date); // 아래의 두 setTo~~Date 함수의 코드 중복부분 작성
+    void setToCurrentDate(); // 오늘 날짜로 설정하는 함수
+    Q_INVOKABLE void setToSpecificDate(int y, int m, int d); // 특정 날짜로 설정하는 함수 // 나중에 qml측에서 날짜 변경기능 만들때 사용할 예정
 
     // getter
-    int getYear();
-    int getMonth();
-    int getDay();
-    int getDayOfWeek();
+    int getYear() const;
+    int getMonth() const;
+    int getDay() const;
+    int getDayOfWeek() const;
+
+signals:
+    void dateChanged();
 };
