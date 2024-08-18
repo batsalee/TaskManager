@@ -11,6 +11,7 @@
 
 #include "../FileManager/FileReader.h"
 #include "../JsonManager/JsonParser.h"
+#include "../Tutorial/Tutorial.h"
 
 class Initializer
 {
@@ -20,7 +21,13 @@ public:
     int last_managed_date_month;
     int last_managed_date_day;
 
-    void init();
+    // 생성자
+    Initializer();
+
+    // 초기설정 함수
+    void Init();
+
+    // 정보 확인용 bool함수
     bool isTutorialNeeded();
     bool isOpenedToday(Date& date);
 };

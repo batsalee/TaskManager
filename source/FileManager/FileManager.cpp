@@ -26,8 +26,7 @@ void FileManager::setPath(Date& date)
 */
 void FileManager::setPath(std::string file_name)
 {
-    folder_path = "./Data/fixed_schedule";
-    file_path = folder_path + "/" + file_name + ".json";
+    file_path = file_name;
 }
 
 /* getFolderPath(), getFilePath()

@@ -2,7 +2,7 @@
 
 Date::Date()
 {
-    /* 초기값 설정의 이유
+    /*초기값 설정의 이유
     처음 Date::instance()로 객체 생성시 값을 설정하지 않으면
     int 멤버변수들에 쓰레기값이 들어있으므로 예상하못지 한 결과나가 올 수 있음
     물론 프로그램 시작과 동시에 Date객체 생성후 currentDate()함수를 호출하겠지만
@@ -10,6 +10,7 @@ Date::Date()
     */
     setToCurrentDate();
 }
+
 
 /* instance()
 용도 : Date 싱글턴 객체 획득

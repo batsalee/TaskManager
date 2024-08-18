@@ -19,6 +19,9 @@ qml과 직접적으로 소통하는 이 프로젝트의 핵심 클래스
 #include <QList>
 #include "../Task/Task.h"
 
+#include "../FileManager/FileReader.h"
+#include "../JsonManager/JsonParser.h"
+
 class Schedule : public QObject
 {
     Q_OBJECT

@@ -10,6 +10,25 @@ Schedule& Schedule::instance()
     return instance;
 }
 
+void Schedule::makeTaskList()
+{
+    FileReader file_reader; // 부모클랙스인 FileManager의 생성자에 의해 오늘 날짜 기반 경로 설정
+    JsonParser json_parser; // 파일 내용은 json형태이므로 파싱담당 객체 생성
+
+    Date& date = Date::instance();
+
+    if (std::filesystem::exists(file_reader.getFilePath())) { // 오늘 별도로 추가된 일정이 있다면 task_list에 추가
+        json_parser.jsonToTaskList(file_reader.readFile());
+    }
+
+    file_reader.setPath("./Data/fixed_schedule/everyday.json"); // 매일 할일 파일을 읽어온 후 task_list에 추가
+    json_parser.jsonToTaskList(file_reader.readFile());
+
+    std::string days[8] = {"", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+    file_reader.setPath("./Data/fixed_schedule/" + days[date.getDayOfWeek()] + ".json"); // 해당 요일에 할일 파일을 읽어온 후 task_list에 추가
+    json_parser.jsonToTaskList(file_reader.readFile());
+}
+
 /* GetScheduleList()
 용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
 시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음
