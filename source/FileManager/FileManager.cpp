@@ -8,7 +8,7 @@ void FileManager::setPath(Date& date)
 {
     std::string year = std::to_string(date.getYear());
     std::string month = (date.getMonth() < 10) ? '0' + std::to_string(date.getMonth()) : std::to_string(date.getMonth());
-    folder_path = "./Schedule/" + year + "/" + month;
+    folder_path = "./Data/" + year + "/" + month;
 
     std::string file_name = (date.getDay() < 10) ? '0' + std::to_string(date.getDay()) : std::to_string(date.getDay());
     file_path = folder_path + "/" + file_name + ".json";
@@ -21,7 +21,7 @@ void FileManager::setPath(Date& date)
 */
 void FileManager::setPath(std::string file_name)
 {
-    folder_path = "./Schedule/fixed_schedule";
+    folder_path = "./Data/fixed_schedule";
     file_path = folder_path + "/" + file_name + ".json";
 }
 
