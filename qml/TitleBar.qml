@@ -29,7 +29,7 @@ Rectangle {
         x: 0
         y: 0
         width: parent.width * 0.85
-        height: 30
+        height: 37
         text: getCurrentDateTime()
         padding: 5
         anchors.verticalCenter: parent.verticalCenter

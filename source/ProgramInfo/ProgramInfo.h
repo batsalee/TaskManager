@@ -15,19 +15,17 @@
 #include "../JsonManager/JsonSerializer.h"
 #include "../Tutorial/Tutorial.h"
 
-class Initializer
+class ProgramInfo
 {
 public:
     bool tutorial;
     int last_managed_date_year;
     int last_managed_date_month;
-    int last_managed_date_day;
+    int last_managed_date_day; // 이 변수들 getter 만드는게 나을수도
 
     // 생성자
-    Initializer();
-
-    // 초기설정 함수
-    void Init();
+    ProgramInfo();
+    ~ProgramInfo();
 
     // 정보 확인용 bool함수
     bool isTutorialNeeded();

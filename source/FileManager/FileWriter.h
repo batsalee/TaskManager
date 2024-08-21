@@ -20,5 +20,5 @@ class FileWriter : public FileManager
 {
 public:
     std::ofstream getOfstream();
-    void writeFile(std::string& context);
+    void writeFile(const std::string& context);
 };

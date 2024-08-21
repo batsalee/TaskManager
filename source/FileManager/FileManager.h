@@ -29,6 +29,7 @@ protected:
 
 public:
     FileManager();
+
     virtual ~FileManager() {};
 
     // setter 오버로딩

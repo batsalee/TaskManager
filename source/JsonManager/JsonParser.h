@@ -14,12 +14,11 @@ rapidjson 라이브러리 활용
 #pragma once
 
 #include "JsonManager.h"
-#include "../Schedule/Schedule.h"
 
 class JsonParser : public JsonManager
 {
 public:
-    Document parse(std::string file_content);
-    bool isOpened(std::string file_content);
-    void jsonToTaskList(std::string file_content, bool isRemaining = false);
+    Document parse(const std::string& file_content);
+    std::pair<bool, std::tuple<int, int, int>> jsonToProgramInfo(const std::string& file_content);
+    QList<QList<Task>> jsonToTaskList(const std::string& file_content);
 };

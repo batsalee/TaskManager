@@ -13,7 +13,7 @@ std::ofstream FileWriter::getOfstream()
 시퀀스 : 종료시점에 Schedule객체의 task_list내용을 jsonManager가 Serializing하고
         파싱된 내용을 FileWriter의 writeFile 객체를 통해 로컬에 저장
 */
-void FileWriter::writeFile(std::string& context)
+void FileWriter::writeFile(const std::string& context)
 {
     // 폴더 없으면 만들기
     if (!std::filesystem::exists(folder_path))

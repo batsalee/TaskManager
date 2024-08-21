@@ -1,0 +1,28 @@
+{
+    "Schedule": [
+        [
+            {
+                "title": "1일 1커밋",
+                "importance": 1
+            },
+            {
+                "title": "TaskManager 리팩토링",
+                "importance": 3
+            },
+            {
+                "title": "Modern C++ 복습",
+                "importance": 3
+            }
+        ],
+        [
+            {
+                "title": "컵 씻기",
+                "importance": 3
+            },
+            {
+                "title": "영양제 2종",
+                "importance": 3
+            }
+        ]
+    ]
+}

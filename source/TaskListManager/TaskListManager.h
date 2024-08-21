@@ -20,37 +20,44 @@ qml과 직접적으로 소통하는 이 프로젝트의 핵심 클래스
 #include "../Task/Task.h"
 
 #include "../FileManager/FileReader.h"
+#include "../FileManager/FileWriter.h"
 #include "../JsonManager/JsonParser.h"
+#include "../JsonManager/JsonSerializer.h"
 
-class Schedule : public QObject
+class TaskListManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<QList<Task>> task_list READ GetScheduleList NOTIFY ListChanged)
+    Q_PROPERTY(QList<QList<Task>> task_list READ getTaskList NOTIFY ListChanged)
 
 private:
     // 생성자
-    Schedule() = default;
-    ~Schedule();
+    TaskListManager() = default;
+    ~TaskListManager() = default;
 
     // 싱글턴 구현 위해 복사, 이동, 대입 delete
-    Schedule(const Schedule& d) = delete;
-    Schedule(Schedule&& d) = delete;
-    Schedule& operator=(const Schedule & d) = delete;
+    TaskListManager(const TaskListManager& d) = delete;
+    TaskListManager(TaskListManager&& d) = delete;
+    TaskListManager& operator=(const TaskListManager & d) = delete;
 
 public:
     QList<QList<Task>> task_list; // 이 클래스와 프로그램의 핵심인 이중리스트
-    QList<QList<Task>> GetScheduleList(); // getter
+    QList<QList<Task>> getTaskList(); // getter
 
     // setter
     Q_INVOKABLE void insertTask(QString);
     Q_INVOKABLE void updateTask(int, int, QString);
     Q_INVOKABLE void deleteTask(int, int);
 
-    static Schedule& instance(); // 싱글턴 객체 획득 함수
+    void makeTaskList(int last_managed_date_year, int last_managed_date_month, int last_managed_date_day);
+    void appendList(QList<QList<Task>> appended_list);
+    Q_INVOKABLE void saveTaskList(); // invokable 필요한지 고려해보기
+    void adjustImportance(QList<QList<Task>> remaining_list);
+
+    static TaskListManager& instance(); // 싱글턴 객체 획득 함수
 
 signals:
     void ListChanged();
 
 public slots:
-    void showTaskList();
+    void loadTaskList();
 };

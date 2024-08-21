@@ -7,7 +7,7 @@ Column {
     Button {
         width: parent.width
         height: parent.height / 10
-        text: qsTr("할일 추가")
+        text: qsTr("할일 추가")        
 
         onClicked: {
 

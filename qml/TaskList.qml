@@ -5,7 +5,7 @@ import QtQuick.Controls
 ListView {
     id: listView
     clip: true
-    model: schedule.task_list
+    model: tasklist_manager.task_list
     boundsBehavior: Flickable.StopAtBounds
 
     property int scroll_height // 스크롤된 상태에서 더블클릭으로 지울때 contentY가 유지되도록 하기 위해
@@ -15,7 +15,7 @@ ListView {
         x: 0
         y: 0
         width: listView.width
-        height: 30
+        height: 37
         color: index % 2 ? "#555555" : "#444444"
 
         property int yIndex;
@@ -34,7 +34,7 @@ ListView {
                     width: scheduleText.width + 10
                     height: scheduleText.height
                     border.width: 1.5
-                    radius: 10
+                    radius: 15
                     anchors.verticalCenter: parent.verticalCenter                                      
 
                     Text {
@@ -56,7 +56,7 @@ ListView {
                             // 클릭한 사각형의 인덱스를 얻어서 list에서 remove 해주기
                             backgroundRect.getxIndex();
                             xIndex = index;
-                            schedule.deleteTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
+                            tasklist_manager.deleteTask(yIndex, xIndex); // 더블클릭된 사각형 삭제하고
                         }
 
                         onClicked: {

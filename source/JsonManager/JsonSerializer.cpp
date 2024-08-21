@@ -18,7 +18,7 @@ std::string JsonSerializer::initializerToJson(int y, int m, int d)
     return buffer.GetString();
 }
 
-std::string JsonSerializer::taskListToJson(QList<QList<Task>>& task_list)
+std::string JsonSerializer::taskListToJson(const QList<QList<Task>>& task_list)
 {
     Document document;
     document.SetObject();
@@ -30,8 +30,7 @@ std::string JsonSerializer::taskListToJson(QList<QList<Task>>& task_list)
         for (const auto& task : inner_list) {
             Value task_object(kObjectType);
 
-            task_object.AddMember("title", Value().SetString(task.title.toStdString().c_str(), allocator), allocator); // 이 부분이 오류가 아주 많이 발생해서 고생하는 중인데 괜찮은지 계속 확인하기
-
+            task_object.AddMember("title", Value().SetString(task.title.toStdString().c_str(), allocator), allocator);
             task_object.AddMember("importance", task.importance, allocator);
             inner_array.PushBack(task_object, allocator);
         }

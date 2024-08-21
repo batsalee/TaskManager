@@ -14,11 +14,10 @@ rapidjson 라이브러리 활용
 #pragma once
 
 #include "JsonManager.h"
-#include "../Schedule/Schedule.h"
 
 class JsonSerializer : public JsonManager
 {
 public:
     std::string initializerToJson(int y, int m, int d);
-    std::string taskListToJson(QList<QList<Task>>& task_list);
+    std::string taskListToJson(const QList<QList<Task>>& task_list);
 };

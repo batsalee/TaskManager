@@ -3,7 +3,7 @@
 std::ifstream FileReader::getIfstream()
 {
     std::ifstream ifs(file_path);
-    if(!ifs) throw std::runtime_error("Failed to open file.");
+    if(!ifs) throw std::runtime_error("Failed to open file");
 
     return ifs;
 }
@@ -15,12 +15,11 @@ std::ifstream FileReader::getIfstream()
 std::string FileReader::readFile()
 {
     std::ifstream ifs(file_path);
-    if(!ifs) throw std::runtime_error("Failed to open file.");
+    if(!ifs) throw std::runtime_error("Failed to open file");
 
     std::stringstream buffer;
     buffer << ifs.rdbuf();
     if(ifs.fail()) throw std::runtime_error("Failed to read file");
 
-    std::string file_content = buffer.str();
-    return file_content;
+    return buffer.str(); // RVO À¯µµ
 }
