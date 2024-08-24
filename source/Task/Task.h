@@ -2,8 +2,8 @@
 
 1. 클래스 관계
 Task는 정확히는 클래스가 아니라 구조체
-Schedule 클래스의 멤버변수인 task_list의 구성요소인 task구조를 담당
-ScheduleFactory에서 JsonManager로 json을 파싱할때 구조화됨
+TaskListManager 클래스의 멤버변수인 task_list의 구성요소인 task구조를 담당
+즉 TaskListManager는 Task에 의존적임
 
 2. 용도
 일정의 내용뿐 아니라 중요도 설정을 위해 json화 및 구조체화
@@ -25,8 +25,8 @@ using Task = struct task {
     Q_PROPERTY(int importance MEMBER importance)
 
 public:
-    QString title;
-    int importance;
+    QString title; // 일정의 내용
+    int importance; // 일정의 중요도(1이 가장 높음, 3이 가장 낮음)
 };
 
 Q_DECLARE_METATYPE(Task)

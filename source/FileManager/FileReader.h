@@ -4,11 +4,10 @@
 FileManager.h의 자식클래스
 
 2. 용도
-로컬에 저장된 File을 읽어옴
-읽어온 결과는 JsonParser에 의해 이중리스트로 파싱됨
+로컬에 저장된 File의 내용을 읽어옴
 
 3. 구현방식
-FileManager 상속받고 읽기 관련된 부분만 FileReader에 구현
+FileManager 상속받고 읽기 관련된 부분만 FileReader에서 확장
 */
 
 #pragma once
@@ -18,6 +17,6 @@ FileManager 상속받고 읽기 관련된 부분만 FileReader에 구현
 class FileReader : public FileManager
 {
 public:
-    std::ifstream getIfstream();
+    std::ifstream getIfstream(); // 현재 사용되지 않지만 rapidjson의 다른 사용방식을 위해 남겨둠
     std::string readFile();
 };

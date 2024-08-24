@@ -5,11 +5,9 @@ FileManager.h의 자식클래스
 
 2. 용도
 로컬에 일정파일의 내용을 작성하고 저장함
-Schedule객체가 소멸할때 이중리스트의 내용을 JsonSerializer가 json으로 변경하고
-FileWriter가 해당 json 내용을 로컬에 File로 저장
 
 3. 구현방식
-FileManager 상속받고 쓰기 관련된 부분만 FileWriter에 구현
+FileManager 상속받고 쓰기 관련된 부분만 FileWriter에서 확장
 */
 
 #pragma once
@@ -19,6 +17,6 @@ FileManager 상속받고 쓰기 관련된 부분만 FileWriter에 구현
 class FileWriter : public FileManager
 {
 public:
-    std::ofstream getOfstream();
+    std::ofstream getOfstream(); // 현재 사용되지 않지만 rapidjson의 다른 사용방식을 위해 남겨둠
     void writeFile(const std::string& context);
 };

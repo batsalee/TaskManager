@@ -2,10 +2,9 @@
 
 1. 클래스 관계
 JsonManager의 자식클래스
-Schedule 객체 소멸시 이중리스트를 json으로 serializing한 후 해당 내용을 FileWriter가 로컬에 저장
 
 2. 용도
-이중리스트를 json으로 변경
+프로그램 내부의 데이터를 json 형태로 변경
 
 3. 구현방식
 rapidjson 라이브러리 활용
@@ -18,6 +17,6 @@ rapidjson 라이브러리 활용
 class JsonSerializer : public JsonManager
 {
 public:
-    std::string initializerToJson(int y, int m, int d);
+    std::string programInfoToJson(int y, int m, int d);
     std::string taskListToJson(const QList<QList<Task>>& task_list);
 };

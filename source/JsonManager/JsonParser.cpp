@@ -1,6 +1,11 @@
 #include "JsonParser.h"
 
-// throw된 내용을 catch하는건 ProgramInfo인지 jsonTo인지에 따라 처리방법이 다르니 각자 처리하기
+/* parse()
+용도 : json 문구를 파싱
+시퀀스 : FileReader에 의해 읽혀진 파일의 내용을 jsonParser가 파싱
+특이사항 : 예외 발생시 예외는 이 함수 내부가 아닌 호출한 측에서 처리하며,
+          이유는 parse()를 호출한 대상이 ProgramInfo인지 TaskListManager인지에 따라 처리방법이 다르므로 호출한 쪽에서 처리
+*/
 Document JsonParser::parse(const std::string& file_content)
 {
     Document document;
@@ -17,6 +22,10 @@ Document JsonParser::parse(const std::string& file_content)
     return document;
 }
 
+/* jsonToProgramInfo()
+용도 : program_info.json 파일을 파싱해서 프로그램에 필요한 정보로 변환
+시퀀스 : ProgramInfo 클래스에 의해 호출됨. json 파일을 파싱한 결과에서 필요한 정보를 담아서 반환하면 ProgramInfo에서 해당 정보를 활용
+*/
 std::pair<bool, std::tuple<int, int, int>> JsonParser::jsonToProgramInfo(const std::string& file_content)
 {
     Document document = parse(file_content.c_str()); // 주의! 예외는 여기서 처리 안하고 ProgramInfo에서 FileReader와 함께 처리
@@ -31,9 +40,9 @@ std::pair<bool, std::tuple<int, int, int>> JsonParser::jsonToProgramInfo(const s
 
 
 /* jsonToTaskList()
-용도 : json파일을 파싱해서 이중리스트로 변환
-시퀀스 : FileManager에 의해 읽혀진 파일의 내용을 jsonParser가 파싱하고, 그 결과를 Schedule객체의 task_list멤버변수에 보관
-고민 : 파일 열때 opened : false거나 opened가 없다면 어제자 내용을 가져와야함, 있다면 그대로 읽으면 됨
+용도 : 일정이 담겨있는 json파일을 파싱해서 이중리스트로 변환
+시퀀스 : TaskListManager 클래스에 의해 호출됨. json 파일을 파싱한 결과를 프로그램에서 사용하는 이중리스트 형태로 변환 후 반환
+특이사항 : parse()함수에서 예외가 발생시 예외를 처리하고 다시 예외를 던짐, 이유는 TaskListManager 측에서 예외가 발생한 파일명과 예외의 내용을 모두 확인하기 위함
 */
 QList<QList<Task>> JsonParser::jsonToTaskList(const std::string& file_content)
 {

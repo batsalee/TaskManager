@@ -14,33 +14,6 @@ TaskListManager& TaskListManager::instance()
     return instance;
 }
 
-void TaskListManager::loadTaskList()
-{
-    FileReader file_reader; // 부모클랙스인 FileManager의 생성자에 의해 현재 관리중인 날짜 기반 경로 설정
-    JsonParser json_parser; // 파일 내용은 json형태이므로 파싱담당 객체 생성
-
-    try {
-        if (std::filesystem::exists(file_reader.getFilePath())) { // 해당 날짜에 별도로 추가된 일정이 있다면 task_list에 추가
-            std::string file_content = file_reader.readFile(); // RVO 유도
-            task_list = json_parser.jsonToTaskList(file_content);
-        }
-        else {
-            throw std::runtime_error("file does not exist");
-        }
-    }
-    catch(const std::runtime_error& re) {
-        task_list.clear();
-        std::cerr << std::string(re.what()) + "(" + file_reader.getFilePath() << ")\n";
-    }
-}
-
-void TaskListManager::appendList(QList<QList<Task>> appended_list)
-{
-    for (const auto& inner_list : appended_list) {
-        task_list.append(inner_list);
-    }
-}
-
 void TaskListManager::makeTaskList(int last_managed_date_year, int last_managed_date_month, int last_managed_date_day)
 {
     FileReader file_reader; // 부모클랙스인 FileManager의 생성자에 의해 현재 관리중인 날짜 기반 경로 설정
@@ -93,21 +66,32 @@ void TaskListManager::makeTaskList(int last_managed_date_year, int last_managed_
     }
 }
 
-// 안하고 남겨둔 일들 중요도 높이기
-void TaskListManager::adjustImportance(QList<QList<Task>> remaining_list)
+void TaskListManager::loadTaskList()
 {
-    for(auto& rl : remaining_list){
-        for(auto& task : rl) {
-            if(task.importance != 1) task.importance = 2;
+    FileReader file_reader; // 부모클랙스인 FileManager의 생성자에 의해 현재 관리중인 날짜 기반 경로 설정
+    JsonParser json_parser; // 파일 내용은 json형태이므로 파싱담당 객체 생성
+
+    try {
+        if (std::filesystem::exists(file_reader.getFilePath())) { // 해당 날짜에 별도로 추가된 일정이 있다면 task_list에 추가
+            std::string file_content = file_reader.readFile(); // RVO 유도
+            task_list = json_parser.jsonToTaskList(file_content);
+        }
+        else {
+            throw std::runtime_error("file does not exist");
         }
     }
+    catch(const std::runtime_error& re) {
+        task_list.clear();
+        std::cerr << std::string(re.what()) + "(" + file_reader.getFilePath() << ")\n";
+    }
 }
+
 
 /*
 저장하는 로직
 예외처리 필요한가 여기도?
 */
-Q_INVOKABLE void TaskListManager::saveTaskList()
+void TaskListManager::saveTaskList()
 {
     JsonSerializer json_serializer;
     std::string json_content = json_serializer.taskListToJson(task_list);
@@ -117,13 +101,22 @@ Q_INVOKABLE void TaskListManager::saveTaskList()
 }
 
 
-/* GetScheduleList()
-용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
-시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음
-*/
-QList<QList<Task>> TaskListManager::getTaskList()
+void TaskListManager::appendList(const QList<QList<Task>>& appended_list)
 {
-    return task_list;
+    for (const auto& inner_list : appended_list) {
+        task_list.push_back(inner_list);
+    }
+}
+
+
+// 안하고 남겨둔 일들 중요도 높이기
+void TaskListManager::adjustImportance(QList<QList<Task>>& remaining_list)
+{
+    for(auto& rl : remaining_list){
+        for(auto& task : rl) {
+            if(task.importance != 1) task.importance = 2;
+        }
+    }
 }
 
 /* insertTask()
@@ -162,3 +155,9 @@ Q_INVOKABLE void TaskListManager::deleteTask(int y, int x)
 
     emit ListChanged();
 }
+
+/* GetScheduleList()
+용도 : C++과 QML의 integration에서의 Q_PROPERTY속성의 READ함수
+시퀀스 : QML에서 Window를 띄울때 ListView의 내용을 얻어야 하므로 해당 함수를 통해 얻음
+*/
+QList<QList<Task>> TaskListManager::getTaskList() const { return task_list; }
