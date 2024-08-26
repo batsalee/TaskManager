@@ -79,11 +79,11 @@ ListView {
                     }
 
                     Component.onCompleted: {
-                        if (modelData.importance == 1) {
+                        if (modelData.importance === 1) {
                             rectangle.color = "#333333"
                             rectangle.border.color = "#DDBB88"
                             scheduleText.color = "#DDBB88"
-                        } else if (modelData.importance == 2) {
+                        } else if (modelData.importance === 2) {
                             rectangle.color = "#BB3377"
                             rectangle.border.color = "#BB3377"
                             scheduleText.color = "#AAAAAA"
