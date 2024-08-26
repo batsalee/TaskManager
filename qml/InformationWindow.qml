@@ -1,5 +1,5 @@
-import QtQuick 6.3
-import QtQuick.Controls 6.3
+import QtQuick 6.5
+import QtQuick.Controls 6.5
 
 Window {
     id: textInputWindow
