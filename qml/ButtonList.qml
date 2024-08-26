@@ -32,7 +32,7 @@ Column {
         height: parent.height / 10
         text: qsTr("일정 관리")
 
-        onClicked: folder_opener.openFolder("/Schedule")
+        onClicked: folder_opener.openFolder("/Data")
 
     }
 
@@ -41,7 +41,7 @@ Column {
         height: parent.height / 10
         text: qsTr("장기 계획")
 
-        onClicked: folder_opener.openFolder("/Schedule/long_term_goal")
+        onClicked: folder_opener.openFolder("/Data/long_term_goal")
     }
 
     Button {

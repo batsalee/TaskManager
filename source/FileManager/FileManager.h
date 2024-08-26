@@ -25,9 +25,11 @@ FileWriter 클래스에서 저장하는 시점에 파일 경로에 맞는 폴더의 존재 유무 파악을 �
 
 #pragma once
 
+#include <iostream> // 파일여닫을때 cerr 출력용도
 #include <string>
 #include <filesystem>
 #include <fstream>
+
 #include "../Date/Date.h"
 
 class FileManager

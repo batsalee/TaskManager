@@ -7,10 +7,11 @@
 #include "QtPlugin/import_qml_plugins.h"
 
 // 내가 작성한 header
-#include "ProgramInfo/ProgramInfo.h"
-#include "TaskListManager/TaskListManager.h"
+#include "Alarm/Alarm.h"
 #include "Date/Date.h"
 #include "FolderOpener/FolderOpener.h"
+#include "ProgramInfo/ProgramInfo.h"
+#include "TaskListManager/TaskListManager.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,8 +32,11 @@ int main(int argc, char *argv[])
     /* 2. 보조 객체 생성
         1) folder_opener : 윈도우 탐색기로 폴더를 열어주는 객체
             - 절대경로를 기반으로 경로에 한글이 있어도 문제없도록 인코딩 후 Qt에서 제공하는 함수를 이용해 폴더를 열어줌
+        2) alram : 사용자가 등록한 알람을 관리하는 객체
+            - json에 저장된 알람들을 알람 객체가 읽어와서 등록함(**알람 기능은 추후 기능 추가때 구현 예정**)
     */
     FolderOpener folder_opener;
+    Alarm alarm;
 
     /* 3. 프로그램 정보 확인을 위한 객체 생성
         1) file_reader : 로컬에 저장된 파일을 읽어오는 FileReader 객체
@@ -52,9 +56,10 @@ int main(int argc, char *argv[])
 
     /* 4. 프로그램 초기 설정
         - 3에서 생성한 객체들을 사용해서 프로그램 정보를 확인하고, 대응되는 동작을 수행
+        - 알람 정보 확인 및 등록
 
         IF 프로그램 설치 후 최초 실행 THEN {
-            튜토리얼 시작, 현재 미구현상태이며 추후 기능 추가때 구현 예정
+            튜토리얼 시작(**현재 미구현상태이며 추후 기능 추가때 구현 예정**)
         }
         ELSE {
             IF 오늘 이미 실행한적이 있다면 THEN
@@ -72,12 +77,14 @@ int main(int argc, char *argv[])
     }
 
     if(program_info->isOpenedToday(date)) { // 오늘 이미 실행한 적이 있다면
-        tasklist_manager.loadTaskList();
+        tasklist_manager.loadSpecificTaskList();
     }
     else { // 오늘 처음 실행하는 것이라면
         tasklist_manager.makeTaskList(program_info->getLastManagedDateYear(), program_info->getLastManagedDateMonth(), program_info->getLastManagedDateDay());
         tasklist_manager.saveTaskList();
     }
+
+    alarm.registerAlarm(); // 알람 정보 확인 및 등록(**추후 기능 추가때 구현 예정**)
 
     /* 5. 할당 해제
         - 프로그램 초기 설정에 사용된 객체들은 더 이상 필요 없으므로 리소스 관리를 위해 할당 해제
@@ -101,7 +108,7 @@ int main(int argc, char *argv[])
             - Qt 프레임워크에 의해 프로그램 종료 관련 시그널이 발생하면, tasklist_manager 객체가 일정 정보를 로컬에 파일로 저장하기 위해 saveTaskList() 함수를 수행
     */
     QObject::connect(&date, &Date::dateChanged, &tasklist_manager, &TaskListManager::saveTaskList);
-    QObject::connect(&date, &Date::readyToLoad, &tasklist_manager, &TaskListManager::loadTaskList);
+    QObject::connect(&date, &Date::readyToLoad, &tasklist_manager, &TaskListManager::loadSpecificTaskList);
     QObject::connect(qApp, &QCoreApplication ::aboutToQuit, &tasklist_manager, &TaskListManager::saveTaskList);
 
     /* 8. 클라이언트 구조체 QML에 등록
