@@ -1,4 +1,4 @@
-import QtQuick
+import QtQuick 6.3
 import QtQuick.Controls 6.3
 import QtQuick.Layouts 6.3
 
@@ -13,8 +13,6 @@ Column {
 
             /*기능추가시 해당 함수만 남기고 나머지 지우면 됌*/
             // showInsertRect(); // 이 버튼을 누르면 showInsertRect 이벤트 발생
-
-
 
             // textinput 불러와서 작성한 내용 파일에 추가되게
             var component = Qt.createComponent("TextInputWindow.qml");
@@ -33,7 +31,6 @@ Column {
         text: qsTr("일정 관리")
 
         onClicked: folder_opener.openFolder("/Data")
-
     }
 
     Button {

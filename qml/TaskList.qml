@@ -1,6 +1,6 @@
-import QtQuick
+import QtQuick 6.3
 import QtQuick.Layouts 6.3
-import QtQuick.Controls
+import QtQuick.Controls 6.3
 
 ListView {
     id: listView

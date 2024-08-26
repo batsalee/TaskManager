@@ -1,4 +1,4 @@
-import QtQuick
+import QtQuick 6.3
 
 Item {
     anchors.fill: parent
