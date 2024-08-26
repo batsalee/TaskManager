@@ -46,7 +46,7 @@ private:
     // 싱글턴 구현 위해 복사, 이동, 대입 delete
     TaskListManager(const TaskListManager& d) = delete;
     TaskListManager(TaskListManager&& d) = delete;
-    TaskListManager& operator=(const TaskListManager & d) = delete;
+    TaskListManager& operator=(const TaskListManager& d) = delete;
 
     // load 함수
     void loadTaskList(FileReader& file_reader, JsonParser& json_parser); // loadFixedTaskList()와 loadSpecificTaskList()의 공통부분이 작성되므로 private로 선언

@@ -133,11 +133,13 @@ void TaskListManager::saveTaskList()
 /* appendList()
 용도 : 멤버 변수인 task_list에 매개변수로 주어진 이중리스트를 이어붙임
 시퀀스 : file_reader가 일정 파일을 읽고, json_parser가 일정 파일을 이중리스트로 변환해서 반환하면 해당 내용을 task_list에 이어붙임
+특이사항 : 여기서 push_back으로 복사가 아닌 이동되도록 하기 위해서 inner_list에 해당하는 Task의 이동생성자를 noexcept로 선언해야 했고
+          이때문에 Task.h의 struct에 다양한 생성자들을 선언하게 되었음
 */
 void TaskListManager::appendList(const QList<QList<Task>>& appended_list)
 {
     for (const auto& inner_list : appended_list) {
-        task_list.push_back(inner_list);
+        task_list.push_back(std::move(inner_list));
     }
 }
 
@@ -162,7 +164,7 @@ void TaskListManager::adjustImportance(QList<QList<Task>>& remaining_list)
 */
 Q_INVOKABLE void TaskListManager::insertTask(QString inserted_task)
 {
-    QList<Task> new_task_list = { Task{inserted_task, 1} }; // 새로 추가될 QList, 추후에 기능 추가 개선때 중요도도 설정 가능하도록 만들기
+    QList<Task> new_task_list = { Task(inserted_task, 1) }; // 새로 추가될 QList, 추후에 기능 추가 개선때 중요도도 설정 가능하도록 만들기
     task_list.push_front(new_task_list);
     emit ListChanged();
 }
