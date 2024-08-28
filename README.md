@@ -64,7 +64,7 @@ https://smallpants.tistory.com/270
 ## 4. 프로젝트 구성
 
 #### 1) 리팩토링 전
-https://github.com/batsalee/TaskManager/tree/version-1.0-backup
+https://github.com/batsalee/TaskManager/tree/version-1.0-backup  
 먼저 최초 개발 후 사용자 피드백에 따라 기능개선 및 기능추가했던 version 1.0의 클래스 다이어그램입니다.  
 ![](https://blog.kakaocdn.net/dn/eACe4l/btsJgyGmOOh/6RLKZjJSEP59U7psCpEA01/img.png)
 
@@ -79,7 +79,7 @@ https://github.com/batsalee/TaskManager/tree/version-1.0-backup
 ![](https://blog.kakaocdn.net/dn/mnAkK/btsJgKNnCHm/wRonsbAZBX4qME8UvxpFt1/img.png)
 
 #### 3) 리팩토링 결과
-https://github.com/batsalee/TaskManager/tree/version-2.0-refactoring
+https://github.com/batsalee/TaskManager/tree/version-2.0-refactoring  
 클래스 다이어그램을 mermaid로 그리는데 한계를 느껴 아래는 draw.io를 활용했습니다.  
 ![](https://blog.kakaocdn.net/dn/AG4oH/btsJf98iklO/IKLvaPPauBiRXP9oD6zZ20/img.png)
 ![](https://blog.kakaocdn.net/dn/bhTCHP/btsJh7tXUnj/w320TkWFoiOTc8vuGdWkA1/img.png)
@@ -244,12 +244,12 @@ ___
 ## 8. 링크
 
 #### 1) GitHub
-https://github.com/batsalee/TaskManager/tree/version-2.0-refactoring
+https://github.com/batsalee/TaskManager/tree/version-2.0-refactoring  
 
 #### 2) Blog
-https://smallpants.tistory.com/321
+https://smallpants.tistory.com/321  
 
 #### 3) 진행상황에 대한 기록
 아래 링크에 진행 상황을 기록해가며 작업했습니다.  
 정리되어 있지 않은 내용이며 해당 내용들이 정리된 내용이 이 문서이지만 관련 문서이므로 링크만 남겨둡니다. 
-https://smallpants.tistory.com/315
+https://smallpants.tistory.com/315  
