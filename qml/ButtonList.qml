@@ -22,7 +22,6 @@ Column {
                 textInsertWindow.state = 0; // 0은 insert, 1은 update
                 textInsertWindow.show();
             }
-
         }
     }
 

@@ -14,8 +14,6 @@ rapidjson 라이브러리를 사용
 
 #pragma once
 
-
-
 #include "../Task/Task.h"
 
 #include "rapidjson/document.h"

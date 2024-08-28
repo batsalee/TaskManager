@@ -40,6 +40,8 @@ class TaskListManager : public QObject
     Q_PROPERTY(QList<QList<Task>> task_list READ getTaskList NOTIFY ListChanged)
 
 private:
+    QList<QList<Task>> task_list; // 이 클래스와 프로그램의 핵심인 이중리스트
+
     TaskListManager() = default;
     ~TaskListManager() = default;
 
@@ -52,8 +54,6 @@ private:
     void loadTaskList(FileReader& file_reader, JsonParser& json_parser); // loadFixedTaskList()와 loadSpecificTaskList()의 공통부분이 작성되므로 private로 선언
 
 public:
-    QList<QList<Task>> task_list; // 이 클래스와 프로그램의 핵심인 이중리스트
-
     static TaskListManager& instance(); // 싱글턴 객체 획득 함수
 
     // Task List 관리 함수
