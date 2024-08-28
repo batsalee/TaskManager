@@ -64,6 +64,7 @@ https://smallpants.tistory.com/270
 ## 4. 프로젝트 구성
 
 #### 1) 리팩토링 전
+https://github.com/batsalee/TaskManager/tree/version-1.0-backup
 먼저 최초 개발 후 사용자 피드백에 따라 기능개선 및 기능추가했던 version 1.0의 클래스 다이어그램입니다.  
 ![](https://blog.kakaocdn.net/dn/eACe4l/btsJgyGmOOh/6RLKZjJSEP59U7psCpEA01/img.png)
 
@@ -78,7 +79,7 @@ https://smallpants.tistory.com/270
 ![](https://blog.kakaocdn.net/dn/mnAkK/btsJgKNnCHm/wRonsbAZBX4qME8UvxpFt1/img.png)
 
 #### 3) 리팩토링 결과
-
+https://github.com/batsalee/TaskManager/tree/version-2.0-refactoring
 클래스 다이어그램을 mermaid로 그리는데 한계를 느껴 아래는 draw.io를 활용했습니다.  
 ![](https://blog.kakaocdn.net/dn/AG4oH/btsJf98iklO/IKLvaPPauBiRXP9oD6zZ20/img.png)
 ![](https://blog.kakaocdn.net/dn/bhTCHP/btsJh7tXUnj/w320TkWFoiOTc8vuGdWkA1/img.png)
