@@ -214,7 +214,7 @@ ___
 - Qt 6
 - C++
 - CMake
-- rapidjson
+- rapidjson  
 인터페이스를 위해 Qt Quick의 qml을 사용했고, 내부 로직은 C++을 사용해 처리했습니다.
 
 #### 해당 기술들을 사용한 이유
